@@ -1,9 +1,4 @@
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for
- * license information.
- */
-package com.functions;
+package coronavirus;
 
 import com.microsoft.azure.functions.*;
 import org.mockito.invocation.InvocationOnMock;

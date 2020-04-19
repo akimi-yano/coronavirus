@@ -64,6 +64,16 @@
                 <artifactId>azure-functions-java-library</artifactId>
                 <version>${azure.functions.java.library.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jpmml</groupId>
+                <artifactId>pmml-evaluator</artifactId>
+                <version>1.4.15</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jpmml</groupId>
+                <artifactId>pmml-evaluator-extension</artifactId>
+                <version>1.4.15</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -71,6 +81,14 @@
         <dependency>
             <groupId>com.microsoft.azure.functions</groupId>
             <artifactId>azure-functions-java-library</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jpmml</groupId>
+            <artifactId>pmml-evaluator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jpmml</groupId>
+            <artifactId>pmml-evaluator-extension</artifactId>
         </dependency>
 
         <!-- Test -->
@@ -87,6 +105,11 @@
     </dependencies>
 
     <build>
+    <resources>
+        <resource>
+            <directory>src/main/java/coronavirus/resources</directory>
+        </resource>
+    </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -172,6 +195,7 @@
                                     <includes>
                                         <include>host.json</include>
                                         <include>local.settings.json</include>
+                                        <include>models/**.pmml</include>
                                     </includes>
                                 </resource>
                             </resources>

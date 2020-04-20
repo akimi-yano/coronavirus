@@ -2,7 +2,7 @@
 <PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.3">
 	<Header>
 		<Application name="JPMML-LightGBM" version="1.2-SNAPSHOT"/>
-		<Timestamp>2020-04-18T22:51:42Z</Timestamp>
+		<Timestamp>2020-04-19T23:55:11Z</Timestamp>
 	</Header>
 	<DataDictionary>
 		<DataField name="_target" optype="continuous" dataType="double"/>

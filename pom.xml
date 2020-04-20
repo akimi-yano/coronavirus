@@ -65,6 +65,11 @@
                 <version>${azure.functions.java.library.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.5</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jpmml</groupId>
                 <artifactId>pmml-evaluator</artifactId>
                 <version>1.4.15</version>
@@ -72,6 +77,11 @@
             <dependency>
                 <groupId>org.jpmml</groupId>
                 <artifactId>pmml-evaluator-extension</artifactId>
+                <version>1.4.15</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jpmml</groupId>
+                <artifactId>pmml-evaluator-test</artifactId>
                 <version>1.4.15</version>
             </dependency>
         </dependencies>
@@ -83,12 +93,20 @@
             <artifactId>azure-functions-java-library</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            </dependency>
+        <dependency>
             <groupId>org.jpmml</groupId>
             <artifactId>pmml-evaluator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jpmml</groupId>
             <artifactId>pmml-evaluator-extension</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jpmml</groupId>
+            <artifactId>pmml-evaluator-test</artifactId>
         </dependency>
 
         <!-- Test -->
@@ -195,7 +213,9 @@
                                     <includes>
                                         <include>host.json</include>
                                         <include>local.settings.json</include>
-                                        <include>models/**.pmml</include>
+                                        <include>models/confirmed/**.pmml</include>
+                                        <include>models/fatalities/**.pmml</include>
+                                        <include>models/test/**.csv</include>
                                     </includes>
                                 </resource>
                             </resources>

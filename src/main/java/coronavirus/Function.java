@@ -13,6 +13,7 @@ import com.microsoft.azure.functions.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.stream.*;
+import  javax.json.*;
 import org.apache.commons.lang3.exception.*;
 import org.jpmml.evaluator.*;
 import org.dmg.pmml.FieldName;
@@ -38,48 +39,44 @@ public class Function {
         String ago = request.getQueryParameters().get("ago");
         String country = request.getQueryParameters().get("country");
         String province = request.getQueryParameters().get("province");
-        if (ago == null || country == null || province == null) {
+        if (ago == null || country == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass params").build();
-        } 
+        }
+        // empty provinces are allowed
+        if (province == null) {
+            province = "";
+        }
 
+        String body = "";
         try {
-            evaluate(context, ago, country, province);
+            body = evaluate(context, ago, country, province);
         } catch (Exception e) {
             context.getLogger().warning(ExceptionUtils.getStackTrace(e));
         }
 
-        return request.createResponseBuilder(HttpStatus.OK).body("Hello").build();
+        return request.createResponseBuilder(HttpStatus.OK).body(body).build();
     }
 
-    public void evaluate(ExecutionContext context,
+    public String evaluate(ExecutionContext context,
     String ago, String country, String province) throws Exception {
-        Evaluator evaluator = new LoadingModelEvaluatorBuilder()
-        .load(new File(getModelPath(ago)))
-        .build();
-        context.getLogger().info(evaluator.toString());
+        // Reading a record from the data source
+        Map<FieldName, ?> inputRecord = readRecord(context, ago, country, province);
 
-        // Perforing the self-check
-        evaluator.verify();
+        List<String> toPredicts  = new ArrayList();
+        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+        toPredicts.add("confirmed");
+        toPredicts.add("fatalities");
+        for (String toPredict : toPredicts) {
+            String fieldName = toPredict + "_" + ago + "_ago";
+            Double startValue = Double.parseDouble(inputRecord.get(FieldName.create(fieldName)).toString());
+            Evaluator evaluator = new LoadingModelEvaluatorBuilder()
+            .load(new File(getModelPath(ago, toPredict)))
+            .build();
+            // Perforing the self-check
+            evaluator.verify();
 
-        // Printing input (x1, x2, .., xn) fields
-        List<? extends InputField> inputFields = evaluator.getInputFields();
-        System.out.println("Input fields: " + inputFields);
-
-        // Printing primary result (y) field(s)
-        List<? extends TargetField> targetFields = evaluator.getTargetFields();
-        System.out.println("Target field(s): " + targetFields);
-
-        // Printing secondary result (eg. probability(y), decision(y)) fields
-        List<? extends OutputField> outputFields = evaluator.getOutputFields();
-        System.out.println("Output fields: " + outputFields);
-
-        // Iterating through columnar data (eg. a CSV file, an SQL result set)
-        while(true){
-            // Reading a record from the data source
-            Map<FieldName, ?> inputRecord = readRecord(context, ago, country, province);
-            if(inputRecord == null){
-                break;
-            }
+            // Printing input (x1, x2, .., xn) fields
+            List<? extends InputField> inputFields = evaluator.getInputFields();
 
             Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
 
@@ -87,10 +84,16 @@ public class Function {
             for(InputField inputField : inputFields){
                 FieldName inputName = inputField.getName();
 
-                Object rawValue = inputRecord.get(inputName.getValue());
+                Object rawValue = inputRecord.get(inputName);
 
                 // Transforming an arbitrary user-supplied value to a known-good PMML value
-                FieldValue inputValue = inputField.prepare(rawValue);
+                FieldValue inputValue = null;
+                try {
+                    inputValue = inputField.prepare(rawValue);
+                } catch(Exception e) {
+                    context.getLogger()
+                    .warning("can't parse value for field '" + inputName.toString() + "': " + rawValue.toString());
+                }
 
                 arguments.put(inputName, inputValue);
             }
@@ -102,14 +105,11 @@ public class Function {
             Map<String, ?> resultRecord = EvaluatorUtil.decodeAll(results);
 
             // Writing a record to the data sink
-            writeRecord(context, resultRecord);
-
-            // TODO remove
-            break;
+            String value = writeRecord(context, resultRecord, toPredict, startValue);
+            jsonBuilder.add(toPredict, value);
         }
 
-        // Making the model evaluator eligible for garbage collection
-        evaluator = null;
+        return jsonBuilder.build().toString();
     }
 
     // TODO
@@ -119,31 +119,34 @@ public class Function {
         CsvUtil.Table inputTable = CsvUtil.readTable(is, ";");
         List<String> missingValues = Arrays.asList("N/A", "NA");
         List<? extends Map<FieldName, ?>> inputRecords = BatchUtil.parseRecords(inputTable, createCellParser(!missingValues.isEmpty() ? new HashSet<>(missingValues) : null));
-        
-        context.getLogger().warning(inputRecords.get(0).toString());
-        context.getLogger().warning(inputRecords.get(0).get(FieldName.create("lat")).toString());
 
+        // lookup record based on Country & Province
         Map<FieldName, ?> rec = inputRecords.stream().filter(record ->
         record.get(FieldName.create("Province_State")).equals(province) && record.get(FieldName.create("Country_Region")).equals(country))
         .findFirst().get();
+
+        // remove extra columns that prediction can't handle
         rec.remove(FieldName.create("Province_State"));
         rec.remove(FieldName.create("Country_Region"));
         return rec;
     }
 
     // TODO
-    public void writeRecord(ExecutionContext context, Map<String, ?> resultRecord) {
-        context.getLogger().warning("result: " + resultRecord.toString());
+    public String writeRecord(ExecutionContext context, Map<String, ?> resultRecord, String toPredict, Double startValue) {
+        Double logDiff = Double.parseDouble(resultRecord.get("_target").toString());
+        Double prediction = Math.exp(logDiff) + startValue;
+        context.getLogger().warning(toPredict + " Prediction: " + prediction.toString());
+        return prediction.toString();
     }
 
-    public String getModelPath(String ago) throws Exception {
-        String model = "confirmed_model_" + ago + ".pmml";
+    public String getModelPath(String ago, String toPredict) throws Exception {
+        String model = toPredict + "_model_" + ago + ".pmml";
         // get model path
         String binPath =
         new File(Function.class.getProtectionDomain().getCodeSource().getLocation()
         .toURI()).getPath();
         binPath = Paths.get(binPath).getParent().toString();
-        return Paths.get(binPath, "models", "confirmed", model).toString();
+        return Paths.get(binPath, "models", toPredict, model).toString();
     }
 
     public String getTestPath(String ago) throws Exception {

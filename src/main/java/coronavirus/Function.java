@@ -22,6 +22,23 @@ import org.dmg.pmml.FieldName;
  * Azure Functions with HTTP Trigger.
  */
 public class Function {
+
+    @FunctionName("locations")
+    public HttpResponseMessage locations(
+            @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request.");
+
+        String locations = "{}";
+        try {
+            locations = getLocations(context);
+        } catch (Exception e) {
+            context.getLogger().warning(ExceptionUtils.getStackTrace(e));
+        }
+
+        return request.createResponseBuilder(HttpStatus.OK).body(locations).build();
+    }
+
     /**
      * This function listens at endpoint "/api/HttpTrigger-Java". Two ways to invoke it using "curl" command in bash:
      * 1. curl -d "HTTP Body" {your host}/api/HttpTrigger-Java&code={your function key}
@@ -31,7 +48,7 @@ public class Function {
      */
     @FunctionName("predict")
     public HttpResponseMessage run(
-            @HttpTrigger(name = "req", methods = {HttpMethod.GET, HttpMethod.POST}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
@@ -55,6 +72,44 @@ public class Function {
         }
 
         return request.createResponseBuilder(HttpStatus.OK).body(body).build();
+    }
+
+    public String getLocations(ExecutionContext context) throws Exception {
+        File file = new File(getTestPath("1"));
+        InputStream is = new FileInputStream(file);
+        CsvUtil.Table inputTable = CsvUtil.readTable(is, ";");
+        List<String> missingValues = Arrays.asList("N/A", "NA");
+        List<? extends Map<FieldName, ?>> inputRecords = BatchUtil.parseRecords(inputTable, createCellParser(!missingValues.isEmpty() ? new HashSet<>(missingValues) : null));
+
+        // lookup record based on Country & Province
+        Map<String, List<String>> locations = new HashMap();
+        inputRecords.stream().forEach(record -> {
+            String province = record.get(FieldName.create("Province_State")).toString();
+            String country = record.get(FieldName.create("Country_Region")).toString();
+            if (locations.containsKey(country)) {
+                locations.get(country).add(province);
+            } else {
+                ArrayList<String> provinces = new ArrayList();
+                provinces.add(province);
+                locations.put(country, provinces);
+            }
+        });
+        JsonArrayBuilder countries = Json.createArrayBuilder();
+        for (Map.Entry<String,List<String>> entry : locations.entrySet()) {
+            JsonArrayBuilder provincesBuilder = Json.createArrayBuilder();
+            for (String province : entry.getValue()) {
+                if (!"".equals(province)) {
+                    provincesBuilder = provincesBuilder.add(
+                        Json.createObjectBuilder().add("name", province));
+                }
+            }
+            JsonObjectBuilder countryBuilder = Json.createObjectBuilder()
+            .add("name", entry.getKey())
+            .add("provinces", provincesBuilder);
+            countries.add(countryBuilder);
+        }
+
+        return Json.createObjectBuilder().add("countries", countries).build().toString();
     }
 
     public String evaluate(ExecutionContext context,

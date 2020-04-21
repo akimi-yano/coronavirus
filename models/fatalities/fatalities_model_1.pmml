@@ -2,7 +2,7 @@
 <PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.3">
 	<Header>
 		<Application name="JPMML-LightGBM" version="1.2-SNAPSHOT"/>
-		<Timestamp>2020-04-21T01:52:08Z</Timestamp>
+		<Timestamp>2020-04-21T05:27:17Z</Timestamp>
 	</Header>
 	<DataDictionary>
 		<DataField name="_target" optype="continuous" dataType="double"/>
@@ -21,11 +21,20 @@
 		<DataField name="fatalities_3days" optype="continuous" dataType="double">
 			<Interval closure="closedClosed" leftMargin="0.0" rightMargin="2096.3333333333335"/>
 		</DataField>
-		<DataField name="since_1024_cases" optype="continuous" dataType="double">
-			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="88.0"/>
+		<DataField name="since_1_cases" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="89.0"/>
 		</DataField>
-		<DataField name="since_4096_cases" optype="continuous" dataType="double">
-			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="87.0"/>
+		<DataField name="since_4_cases" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="89.0"/>
+		</DataField>
+		<DataField name="since_16_cases" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="89.0"/>
+		</DataField>
+		<DataField name="since_64_cases" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="89.0"/>
+		</DataField>
+		<DataField name="since_256_cases" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="89.0"/>
 		</DataField>
 		<DataField name="lat" optype="continuous" dataType="double">
 			<Interval closure="closedClosed" leftMargin="-51.7963" rightMargin="71.7069"/>
@@ -38,14 +47,17 @@
 		<MiningSchema>
 			<MiningField name="_target" usageType="target"/>
 			<MiningField name="confirmed_1_ago" importance="1.0" invalidValueTreatment="asIs"/>
-			<MiningField name="fatalities_1_ago" importance="114.0" invalidValueTreatment="asIs"/>
+			<MiningField name="fatalities_1_ago" importance="113.0" invalidValueTreatment="asIs"/>
 			<MiningField name="recovered_1_ago" importance="1.0" invalidValueTreatment="asIs"/>
-			<MiningField name="confirmed_3days" importance="231.0" invalidValueTreatment="asIs"/>
-			<MiningField name="fatalities_3days" importance="391.0" invalidValueTreatment="asIs"/>
-			<MiningField name="since_1024_cases" importance="1.0" invalidValueTreatment="asIs"/>
-			<MiningField name="since_4096_cases" importance="43.0" invalidValueTreatment="asIs"/>
-			<MiningField name="lat" importance="3.0" invalidValueTreatment="asIs"/>
-			<MiningField name="lon" importance="15.0" invalidValueTreatment="asIs"/>
+			<MiningField name="confirmed_3days" importance="211.0" invalidValueTreatment="asIs"/>
+			<MiningField name="fatalities_3days" importance="390.0" invalidValueTreatment="asIs"/>
+			<MiningField name="since_1_cases" importance="1.0" invalidValueTreatment="asIs"/>
+			<MiningField name="since_4_cases" importance="8.0" invalidValueTreatment="asIs"/>
+			<MiningField name="since_16_cases" importance="24.0" invalidValueTreatment="asIs"/>
+			<MiningField name="since_64_cases" importance="17.0" invalidValueTreatment="asIs"/>
+			<MiningField name="since_256_cases" importance="16.0" invalidValueTreatment="asIs"/>
+			<MiningField name="lat" importance="4.0" invalidValueTreatment="asIs"/>
+			<MiningField name="lon" importance="14.0" invalidValueTreatment="asIs"/>
 		</MiningSchema>
 		<Segmentation multipleModelMethod="sum">
 			<Segment id="1">
@@ -2270,9 +2282,9 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-0.0011321258752956492">
+					<Node score="-0.0012930030457714333">
 						<True/>
 						<Node score="0.012557335315589209">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
@@ -2283,8 +2295,8 @@
 						<Node score="0.004472925936791963">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="0.002503249560259556">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="4.2497030970313943E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2297,9 +2309,9 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0010777337620926249">
+					<Node score="-0.0010777559524263194">
 						<True/>
-						<Node score="0.008636667883551443">
+						<Node score="0.008638815942386573">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="185.1666666666667"/>
 							<Node score="0.015939571841130176">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
@@ -2308,7 +2320,7 @@
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0031939964588124543">
+						<Node score="0.0031930663498987264">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
 						</Node>
 					</Node>
@@ -2321,18 +2333,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-9.831613150468779E-4">
+					<Node score="-9.83214416725264E-4">
 						<True/>
-						<Node score="0.007255872068729931">
+						<Node score="0.007257673230514844">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
 							<Node score="0.02205358725491564">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="120.66666666666667"/>
 							</Node>
-							<Node score="0.01344948503324285">
+							<Node score="0.013449470086677937">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="14.833333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.004651616946493819">
+						<Node score="0.004652040018829639">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
 						</Node>
 					</Node>
@@ -2345,18 +2357,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0011440546739339389">
+					<Node score="-0.0011435793979741912">
 						<True/>
-						<Node score="0.007058158811824909">
+						<Node score="0.007058238974090472">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
-							<Node score="0.014746419394385065">
+							<Node score="0.014746409309122702">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
 								<Node score="0.025234310504177623">
 									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.001539213454548711">
+						<Node score="0.0015348872472409787">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="20.83333333333334"/>
 						</Node>
 					</Node>
@@ -2369,19 +2381,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-0.0012121697290623224">
+					<Node score="-0.0010385128827181131">
 						<True/>
-						<Node score="0.010122385396649395">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.01893656551317845">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
+						<Node score="0.008743956432699302">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="185.1666666666667"/>
+							<Node score="0.015613240111206987">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1003.5000000000001"/>
+								<Node score="0.023618396913461275">
+									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.003960302409397629">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
-						</Node>
-						<Node score="4.5013471618080177E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="9.500000000000002"/>
+						<Node score="0.0030811240176270285">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2392,20 +2404,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-0.0011675731226150445">
+					<Node score="-0.0012226580099009862">
 						<True/>
-						<Node score="0.011827164460647823">
+						<Node score="0.011835237487605512">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.020731064523196126">
+							<Node score="0.02071906023344786">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="123.83333333333336"/>
 							</Node>
 						</Node>
-						<Node score="0.004188757327111039">
+						<Node score="0.004193521496294657">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="5.858814567847538E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="4.4322177525990563E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2417,19 +2430,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.001071611719769309">
+					<Node score="-0.0010197715811376162">
 						<True/>
-						<Node score="0.008273548452401204">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="185.1666666666667"/>
-							<Node score="0.015289995279264695">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
-								<Node score="0.024795337087157143">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
-								</Node>
+						<Node score="0.006666860331856836">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
+							<Node score="0.02023659073095143">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="97.50000000000001"/>
+							</Node>
+							<Node score="0.012500446007260309">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
 							</Node>
 						</Node>
-						<Node score="0.0024116622178997683">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
+						<Node score="0.0032820031251681054">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="41.50000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2438,22 +2451,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
+						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0010293388859407499">
+					<Node score="-0.0010286563448585295">
 						<True/>
-						<Node score="0.008976743059579484">
+						<Node score="0.009242817028470709">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="7.166666666666667"/>
-							<Node score="0.014989281897307452">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1003.5000000000001"/>
-								<Node score="0.02447329653874715">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
-								</Node>
+							<Node score="0.018078249677410358">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
 							</Node>
 						</Node>
-						<Node score="0.0029113632927905437">
+						<Node score="0.0011163575500463226">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
+							<Node score="0.004840399392506757">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2464,20 +2478,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-9.946254525752293E-4">
+					<Node score="-0.0011790315674322825">
 						<True/>
-						<Node score="0.009642350541122497">
+						<Node score="0.009625025558309939">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.01801610593769964">
+							<Node score="0.018051596008531883">
 								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
 							</Node>
 						</Node>
-						<Node score="7.824784862044438E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="41.50000000000001"/>
-							<Node score="0.00466757256322703">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
-							</Node>
+						<Node score="0.003766562965211307">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+						</Node>
+						<Node score="4.1431769818084494E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2488,18 +2503,18 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-0.0010248973386712639">
+					<Node score="-0.00102519996409396">
 						<True/>
-						<Node score="0.008200945446901153">
+						<Node score="0.008213696215357578">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="185.1666666666667"/>
-							<Node score="0.014724412185769259">
+							<Node score="0.014666330456490994">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1003.5000000000001"/>
-								<Node score="0.021535573332490923">
+								<Node score="0.02157374918674606">
 									<SimplePredicate field="confirmed_3days" operator="greaterThan" value="3348.3333333333335"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0023928097636611127">
+						<Node score="0.002394987974823894">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
 						</Node>
 					</Node>
@@ -2512,18 +2527,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0011005294195338066">
+					<Node score="-0.001102121988037049">
 						<True/>
-						<Node score="0.011167002319298047">
+						<Node score="0.011156658961016723">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.019782249096476044">
+							<Node score="0.01978861230550256">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2162.6666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0045126027368169695">
+						<Node score="0.004522034255321537">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
-						<Node score="6.727676150508586E-4">
+						<Node score="6.820844531923247E-4">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
@@ -2533,22 +2548,21 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0010473830389484704">
+					<Node score="-0.0010833833881743894">
 						<True/>
-						<Node score="0.00639838885728783">
+						<Node score="0.006388844932389875">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
-							<Node score="0.0133464399993002">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
-								<Node score="0.023025282733736444">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+							<Node score="0.013915257176349217">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="28.83333333333334"/>
+								<Node score="0.02387698074913392">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0013139864752577612">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="18.83333333333334"/>
+						<Node score="0.0010672480138291566">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2560,18 +2574,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.0010735932845260063">
+					<Node score="-0.0010737106297578345">
 						<True/>
-						<Node score="0.010897904409411883">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.019283285429941493">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2162.6666666666674"/>
+						<Node score="0.010149639002674033">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="10.500000000000002"/>
+							<Node score="0.017779231750822595">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.004398601701102417">
+						<Node score="0.004374762190337417">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
-						<Node score="6.58122800793546E-4">
+						<Node score="6.518659142082484E-4">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
@@ -2581,23 +2595,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-8.895650794197332E-4">
+					<Node score="-0.0011161862240119554">
 						<True/>
-						<Node score="0.010219190301010105">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.01756909403915477">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.00972753572272655">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
+							<Node score="0.019588910375254658">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="125.83333333333336"/>
 							</Node>
 						</Node>
-						<Node score="0.005510405121512169">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.0016217410178023701">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="77.50000000000001"/>
-							</Node>
+						<Node score="0.004069484259762899">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
+						</Node>
+						<Node score="3.793344145011446E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2608,20 +2622,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-0.0011498626476610916">
+					<Node score="-0.0010979155993796157">
 						<True/>
-						<Node score="0.008936346229081168">
+						<Node score="0.008913498762952051">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.01677809877888589">
+							<Node score="0.016799138906415628">
 								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.003515627491572311">
+						<Node score="0.003517652473077715">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="1.0171171632123483E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="3.9471879702787345E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2633,19 +2648,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-9.02517491293714E-4">
+					<Node score="-9.527152058793449E-4">
 						<True/>
-						<Node score="0.008820190252597743">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.016560047454666778">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
+						<Node score="0.005720415308127032">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.012391602378630332">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
+								<Node score="0.020901177918984788">
+									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2900.0000000000005"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.00494895781442065">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
-							<Node score="0.0012298361645923963">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="71.83333333333336"/>
-							</Node>
+						<Node score="0.0017855567834542238">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2656,21 +2671,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-9.36694505222774E-4">
+					<Node score="-0.0010739540752765328">
 						<True/>
-						<Node score="0.011041969762743633">
+						<Node score="0.011051085192345463">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.02258598316131979">
+							<Node score="0.02259323569260825">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0036770408310759397">
+						<Node score="0.0036828362704537402">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="0.0023064603320861994">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="4.0994712981359057E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2682,18 +2697,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-0.001103977730814204">
+					<Node score="-0.0010987007052458346">
 						<True/>
-						<Node score="0.009507907240298034">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="10.500000000000002"/>
-							<Node score="0.01676632570348406">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.010287947004290247">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
+							<Node score="0.01852130223037667">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2513.5000000000005"/>
 							</Node>
 						</Node>
-						<Node score="0.004116568513847375">
+						<Node score="0.004161000457105867">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
-						<Node score="1.9810319180616132E-4">
+						<Node score="1.7729668459918593E-4">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
@@ -2706,19 +2721,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-8.970235486730187E-4">
+					<Node score="-9.95260430118383E-4">
 						<True/>
-						<Node score="0.00577939331466022">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.0184942847699073">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="125.83333333333336"/>
-							</Node>
-							<Node score="0.011121159403154293">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="14.833333333333334"/>
+						<Node score="0.005845018178687795">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
+							<Node score="0.012221255803116504">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
+								<Node score="0.02138707884267136">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.002670511011264139">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
+						<Node score="9.888443919714245E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2727,22 +2742,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
+						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-9.859905828169821E-4">
+					<Node score="-8.596537042422496E-4">
 						<True/>
-						<Node score="0.005775445907142379">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
-							<Node score="0.012055536976729356">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
-								<Node score="0.02112165682120553">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
-								</Node>
+						<Node score="0.005728051630168272">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
+							<Node score="0.021109284254735582">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+							</Node>
+							<Node score="0.011463648811168903">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="14.833333333333334"/>
 							</Node>
 						</Node>
-						<Node score="9.97224610746581E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.002908244344981199">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2754,19 +2770,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-9.755151080314536E-4">
+					<Node score="-9.081106672481965E-4">
 						<True/>
-						<Node score="0.005815823562745523">
+						<Node score="0.005821423206539528">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.012362687273966997">
+							<Node score="0.012361973374446314">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="29.500000000000004"/>
-								<Node score="0.021209030614388898">
+								<Node score="0.021202248296798582">
 									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.001084959272443512">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.0016241374528876119">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2775,23 +2791,21 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-8.065086074679111E-4">
+					<Node score="-8.929144910060878E-4">
 						<True/>
-						<Node score="0.010370979265028325">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.021285230796299768">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+						<Node score="0.0067528754509182404">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="5.500000000000001"/>
+							<Node score="0.01266308108045505">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
+								<Node score="0.021233269211484128">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.002422113294502891">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.006347063522080275">
-								<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-							</Node>
+						<Node score="0.002021376279394375">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2801,20 +2815,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-9.503058486286586E-4">
+					<Node score="-0.0010056072503940446">
 						<True/>
-						<Node score="0.005325133038532698">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
-							<Node score="0.011779785688088006">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="23.166666666666668"/>
-								<Node score="0.02100885163836504">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
-								</Node>
+						<Node score="0.010260248664168966">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
+							<Node score="0.02095756502631254">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="9.645034202743073E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.0038521731505420827">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
+						</Node>
+						<Node score="3.948057315663091E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2823,23 +2838,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-8.451726235494158E-4">
+					<Node score="-9.391522407307384E-4">
 						<True/>
-						<Node score="0.008526124311700937">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.017202680087523844">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="120.66666666666667"/>
+						<Node score="0.005616129670684881">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.011816554797726335">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="29.500000000000004"/>
+								<Node score="0.020091555036639175">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="5.851163632393728E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
-							<Node score="0.0038474858653429734">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
-							</Node>
+						<Node score="0.0010354490004672848">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2850,21 +2864,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-8.528597254482531E-4">
+					<Node score="-9.789518126961832E-4">
 						<True/>
-						<Node score="0.009995159255869248">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.02051269421432825">
+						<Node score="0.009840006117740469">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="10.500000000000002"/>
+							<Node score="0.020424562192319307">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0033519774171755757">
+						<Node score="0.00332271371611445">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="0.0021981541349483168">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="3.9529685191112845E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2873,22 +2887,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
+						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-9.189273511729088E-4">
+					<Node score="-8.259525195395512E-4">
 						<True/>
-						<Node score="0.005463291082330954">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.011546741886674016">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="29.500000000000004"/>
-								<Node score="0.01965432894841098">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
-								</Node>
+						<Node score="0.008329423792788986">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
+							<Node score="0.016800520667859083">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="120.66666666666667"/>
 							</Node>
 						</Node>
-						<Node score="0.0010280247122562561">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="5.633131936409854E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
+							<Node score="0.0037699500659122906">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2900,19 +2915,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-8.148284052852899E-4">
+					<Node score="-8.152152235483375E-4">
 						<True/>
-						<Node score="0.0056918163027909">
+						<Node score="0.00767783780363775">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.010913351190889696">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="150.50000000000003"/>
-								<Node score="0.01821762193687873">
-									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
-								</Node>
+							<Node score="0.014552032457571754">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.002434533722921763">
+						<Node score="5.559910390581196E-4">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
+							<Node score="0.0037209449991909395">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2924,19 +2939,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-8.630069912114992E-4">
+					<Node score="-8.525170648202841E-4">
 						<True/>
-						<Node score="0.004910336448173969">
+						<Node score="0.0049173892875720385">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.010731252625606511">
+							<Node score="0.01069672122069194">
 								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
-								<Node score="0.018097020002669228">
-									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2900.0000000000005"/>
+								<Node score="0.017933896889466148">
+									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0012473404223962592">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="18.83333333333334"/>
+						<Node score="0.0012998792691811857">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="20.83333333333334"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2948,19 +2963,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-7.718336550255259E-4">
+					<Node score="-9.695477653665734E-4">
 						<True/>
-						<Node score="0.0074300418848903555">
+						<Node score="0.007486507709351891">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.014035990708278859">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
+							<Node score="0.014188013575375422">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="588.0000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.004290294842300838">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
-							<Node score="0.0010393425481186132">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="71.83333333333336"/>
-							</Node>
+						<Node score="0.0031998595975484805">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="66.16666666666667"/>
+						</Node>
+						<Node score="1.4072669678969819E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2972,19 +2987,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-8.421705173200901E-4">
+					<Node score="-8.310756641983934E-4">
 						<True/>
-						<Node score="0.004776488109309538">
+						<Node score="0.004786213384104593">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.010426442158772841">
+							<Node score="0.010465403300383027">
 								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
-								<Node score="0.017534284708361592">
-									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
+								<Node score="0.017669282953109468">
+									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2900.0000000000005"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.001224366242676886">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="18.83333333333334"/>
+						<Node score="0.0012684883943764964">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="20.83333333333334"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -2994,20 +3009,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-8.651559456234577E-4">
+					<Node score="-9.1634873897787E-4">
 						<True/>
-						<Node score="0.00423996810522287">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="2.8333333333333335"/>
-							<Node score="0.010038586734947194">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="16.166666666666668"/>
-								<Node score="0.019110568952311367">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
-								</Node>
+						<Node score="0.00929645701266471">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
+							<Node score="0.01910660604522633">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="8.254940031841591E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.0034979055425158976">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
+						</Node>
+						<Node score="3.7707182539049964E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3016,24 +3032,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-7.147888348863539E-4">
+					<Node score="-8.526409088878452E-4">
 						<True/>
-						<Node score="0.007972014387887557">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="10.500000000000002"/>
-							<Node score="0.014187980515824776">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.004958403542616962">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="3.1666666666666674"/>
+							<Node score="0.010465138027556817">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
+								<Node score="0.01836092351875283">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0020681860042998388">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.005810068023011601">
-								<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-							</Node>
+						<Node score="8.682916097298396E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3042,21 +3056,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
+						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-7.841618388486433E-4">
+					<Node score="-9.581275427360122E-4">
 						<True/>
-						<Node score="0.005878073114044723">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="5.500000000000001"/>
-							<Node score="0.011041796585874886">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
-								<Node score="0.018678204002055287">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
-								</Node>
+						<Node score="0.009070345337652929">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
+							<Node score="0.01862010767867757">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0018117055524695907">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
+						<Node score="0.003061471109625807">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+						</Node>
+						<Node score="1.1841742343820575E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3066,21 +3082,20 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-7.683238703264839E-4">
+					<Node score="-9.129881060283309E-4">
 						<True/>
-						<Node score="0.006985501500443803">
+						<Node score="0.006976182685291194">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.013211090034374137">
+							<Node score="0.013255779710788326">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
 							</Node>
 						</Node>
-						<Node score="0.0028374738514281754">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
-							<Node score="1.1462208579765098E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
-							</Node>
+						<Node score="0.0030147193187211097">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="66.16666666666667"/>
+						</Node>
+						<Node score="1.3338093332266527E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3092,18 +3107,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-9.161956918842457E-4">
+					<Node score="-9.011193559332107E-4">
 						<True/>
-						<Node score="0.008311618818857327">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
-							<Node score="0.015136258094048442">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2513.5000000000005"/>
+						<Node score="0.009278826398207077">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
+							<Node score="0.018206215199700615">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0034128191954283676">
+						<Node score="0.003489741876043318">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
-						<Node score="2.210245807431735E-4">
+						<Node score="1.7184443768435064E-4">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
@@ -3115,20 +3130,21 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-8.416617531131458E-4">
+					<Node score="-7.78513861235509E-4">
 						<True/>
-						<Node score="0.004618787033896514">
+						<Node score="0.004615521418569808">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="2.8333333333333335"/>
-							<Node score="0.009909687201760371">
+							<Node score="0.009959453443261917">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="738.3333333333335"/>
-								<Node score="0.017581940140768377">
+								<Node score="0.01754035510773557">
 									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="6.741325511427834E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="9.16666666666667"/>
+						<Node score="0.0010918520358351577">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3139,21 +3155,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-7.422077192457758E-4">
+					<Node score="-9.142846298442437E-4">
 						<True/>
-						<Node score="0.009033859036633242">
+						<Node score="0.00905481081303612">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.017840120096642736">
+							<Node score="0.017742063308126995">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0030151202248905238">
+						<Node score="0.003012188239495016">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="0.0020298631833275114">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="1.1673710832557078E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3164,21 +3180,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-7.325590220523535E-4">
+					<Node score="-8.375905384278003E-4">
 						<True/>
-						<Node score="0.008916434755333262">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.017608474488416972">
+						<Node score="0.008519820919065432">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="11.16666666666667"/>
+							<Node score="0.017511691480053014">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.002975926206574225">
+						<Node score="0.002886544427722212">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
-						<Node score="0.0020034805186690207">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="3.7968039853942084E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="19.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3190,18 +3206,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-7.893386671903778E-4">
+					<Node score="-7.854983716968415E-4">
 						<True/>
-						<Node score="0.004643363507901717">
+						<Node score="0.004819979782348675">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.009824785602744301">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="29.500000000000004"/>
-								<Node score="0.016957429168887046">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+							<Node score="0.010252774384334334">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
+								<Node score="0.017210807251449616">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="9.126841633566886E-4">
+						<Node score="8.844497381855622E-4">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
@@ -3212,20 +3228,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-7.77650182340906E-4">
+					<Node score="-8.233958831133047E-4">
 						<True/>
-						<Node score="0.003789748643042893">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="2.8333333333333335"/>
-							<Node score="0.008978400023087245">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="16.166666666666668"/>
-								<Node score="0.017159652772476722">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
-								</Node>
+						<Node score="0.008727356393356452">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
+							<Node score="0.017060836084000646">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="7.628060653634983E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.0032212528239066824">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
+						</Node>
+						<Node score="3.5139819832659804E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3237,19 +3254,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-7.108472757954962E-4">
+					<Node score="-6.300695570469557E-4">
 						<True/>
-						<Node score="0.0069224930013603">
+						<Node score="0.004321838781647413">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.01430949484729268">
+							<Node score="0.014309465927604867">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="125.83333333333336"/>
 							</Node>
-						</Node>
-						<Node score="5.317770540735776E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
-							<Node score="0.0034320584727696108">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="64.83333333333336"/>
+							<Node score="0.008507647919994988">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="14.833333333333334"/>
 							</Node>
+						</Node>
+						<Node score="0.0027696643639218903">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="66.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3262,18 +3279,18 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-6.974997341640692E-4">
+					<Node score="-6.795051492321624E-4">
 						<True/>
-						<Node score="0.006789307717068116">
+						<Node score="0.006847199263237616">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
-							<Node score="0.013949460463138259">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="120.66666666666667"/>
+							<Node score="0.014123534475769868">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="125.83333333333336"/>
 							</Node>
 						</Node>
-						<Node score="2.3828936913033826E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
-							<Node score="0.002942957156680325">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
+						<Node score="3.9804668256379286E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
+							<Node score="0.0031581745728344397">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
 							</Node>
 						</Node>
 					</Node>
@@ -3286,19 +3303,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-8.371373955317397E-4">
+					<Node score="-7.495035408709321E-4">
 						<True/>
-						<Node score="0.00838885391643632">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.0165699141578933">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+						<Node score="0.004578137143461095">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.009760533497347621">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
+								<Node score="0.016420369003048624">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0031709310968578166">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
-						</Node>
-						<Node score="2.2644718401137123E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="8.554614855695488E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3309,20 +3326,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-7.435807394500313E-4">
+					<Node score="-7.932739181253929E-4">
 						<True/>
-						<Node score="0.016514843868449414">
+						<Node score="0.016419410303417717">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0034734298375128413">
+							<Node score="0.0034732381780459114">
 								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="16.166666666666668"/>
 							</Node>
-							<Node score="0.008544898132202241">
+							<Node score="0.008584333171731962">
 								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="6.182761351764126E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="4.895177320664796E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="23.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3332,21 +3350,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-6.772549921819048E-4">
+					<Node score="-7.008829107601686E-4">
 						<True/>
-						<Node score="0.007662628997577714">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="10.500000000000002"/>
-							<Node score="0.01614032468893652">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+						<Node score="0.003819737377471849">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="2.8333333333333335"/>
+							<Node score="0.008796307669166387">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="20.166666666666668"/>
+								<Node score="0.016043712131395726">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0010505252451267271">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
-							<Node score="0.0041521872603880435">
-								<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-							</Node>
+						<Node score="0.0010156495899156359">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3358,19 +3376,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 					</MiningSchema>
-					<Node score="-7.458831283580076E-4">
+					<Node score="-6.277714365068709E-4">
 						<True/>
-						<Node score="0.003900423978760168">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.008610480992730797">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
-								<Node score="0.014527375170373204">
+						<Node score="0.004416110755023423">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="262.50000000000006"/>
+							<Node score="0.008712256259910013">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="150.50000000000003"/>
+								<Node score="0.014481753962668523">
 									<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="7.333509878089643E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="9.16666666666667"/>
+						<Node score="0.002144052355008344">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="9.500000000000002"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3380,20 +3398,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-7.987014754543448E-4">
+					<Node score="-6.56273286473095E-4">
 						<True/>
-						<Node score="0.007046058578925121">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.012908127629236764">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2162.6666666666674"/>
+						<Node score="0.004402860801553163">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.010594304450889274">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="858.3333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.002702173348463284">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="66.16666666666667"/>
-						</Node>
-						<Node score="1.8554361778720844E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="0.002070297590085404">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
+							<Node score="-5.437025648593127E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3405,21 +3424,20 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-6.406875953656754E-4">
+					<Node score="-5.772949136938664E-4">
 						<True/>
-						<Node score="0.01540805805162299">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.003641772016871995">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
-							</Node>
-							<Node score="0.008329064615560872">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
+						<Node score="0.004910648387541255">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
+							<Node score="0.008715681852432147">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="575.5000000000001"/>
+								<Node score="0.015253344243125067">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0020716157230313914">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.002841205723882457">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3431,20 +3449,21 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-5.687078027617107E-4">
+					<Node score="-7.509525197635938E-4">
 						<True/>
-						<Node score="0.00485243713853751">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
-							<Node score="0.008595739324518379">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="575.5000000000001"/>
-								<Node score="0.015087036769935334">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
-								</Node>
+						<Node score="0.0151783786651156">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0036063344128325343">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
+							</Node>
+							<Node score="0.008233511255126209">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.002781582162535272">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+						<Node score="4.8020594006093484E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="23.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3455,21 +3474,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-6.25433710257866E-4">
+					<Node score="-7.887619816844745E-4">
 						<True/>
-						<Node score="0.008250200214133101">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0035576994617402343">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
-							</Node>
-							<Node score="0.013952055756492816">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
+						<Node score="0.0056881064405010584">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
+							<Node score="0.011080326497052762">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
 							</Node>
 						</Node>
-						<Node score="0.0020320590831821093">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.0027748870845041734">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+						</Node>
+						<Node score="1.3244760244551313E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="30.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3481,20 +3500,21 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-5.547057198094255E-4">
+					<Node score="-7.324782804756754E-4">
 						<True/>
-						<Node score="0.004743126914320788">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
-							<Node score="0.008373554825486003">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="575.5000000000001"/>
-								<Node score="0.01471862109965461">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
-								</Node>
+						<Node score="0.014838692548016069">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.003518283402144481">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
+							</Node>
+							<Node score="0.008022960369844567">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0027123306805135246">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+						<Node score="4.680887573659375E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="23.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3505,21 +3525,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-6.105484612808942E-4">
+					<Node score="-6.275962101392942E-4">
 						<True/>
-						<Node score="0.014976069687000146">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0031596267722299944">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="16.166666666666668"/>
-							</Node>
-							<Node score="0.007749384947177773">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="469.66666666666674"/>
+						<Node score="0.005457005665274359">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
+							<Node score="0.011032818700769676">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="45.50000000000001"/>
+								<Node score="-0.00190394207433127">
+									<SimplePredicate field="lon" operator="greaterThan" value="111.98975000000002"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0019933321703532163">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.00167837452729709">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3531,20 +3551,21 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.8616209367116E-4">
+					<Node score="-7.644220760964206E-4">
 						<True/>
-						<Node score="0.006772250779175038">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.01435947451428679">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+						<Node score="0.004741404554334317">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="185.1666666666667"/>
+							<Node score="0.01049588487708513">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="45.50000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.0032359942899124372">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="8.500000000000002"/>
-							<Node score="6.364363432208031E-4">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="64.83333333333336"/>
-							</Node>
+						<Node score="0.00256045083618927">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="22.500000000000004"/>
+						</Node>
+						<Node score="1.80529019941763E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3555,21 +3576,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_4_cases"/>
 					</MiningSchema>
-					<Node score="-6.130690512941775E-4">
+					<Node score="-5.484267706651986E-4">
 						<True/>
-						<Node score="0.005314479853596479">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
-							<Node score="0.010792184335775262">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="45.50000000000001"/>
-								<Node score="-0.002155808473120348">
-									<SimplePredicate field="lon" operator="greaterThan" value="111.98975000000002"/>
-								</Node>
+						<Node score="0.007633904496562851">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
+							<Node score="0.014498565138090894">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
+							</Node>
+							<Node score="-0.0058530360042708335">
+								<SimplePredicate field="since_4_cases" operator="greaterThan" value="71.50000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.0016450091301184698">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
+						<Node score="0.002463937369357523">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3579,21 +3600,20 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-5.816583087957123E-4">
+					<Node score="-7.180942736970406E-4">
 						<True/>
-						<Node score="0.00638765033493997">
+						<Node score="0.006392861266244313">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.011724226787887414">
+							<Node score="0.01181519214470109">
 								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2162.6666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0025243372273796704">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="35.50000000000001"/>
-							<Node score="-1.2929726471090356E-5">
-								<SimplePredicate field="lon" operator="greaterThan" value="41.540000000000006"/>
-							</Node>
+						<Node score="0.0026832489857408705">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+						</Node>
+						<Node score="1.6994415563154647E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3602,23 +3622,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-7.353922713585228E-4">
+					<Node score="-6.438952604032299E-4">
 						<True/>
-						<Node score="0.014012650048643525">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.003457704424086716">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="738.3333333333335"/>
-							</Node>
-							<Node score="0.007777285798487279">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
+						<Node score="0.003984111393541524">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.00843901974827258">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
+								<Node score="0.01418259971095707">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="2.9806405102428274E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="7.511105113769155E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3628,20 +3647,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-6.381695474579213E-4">
+					<Node score="-7.356669003937728E-4">
 						<True/>
-						<Node score="0.007077674908400642">
+						<Node score="0.007089186959401509">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.013951055553414303">
+							<Node score="0.01397273975103878">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0026402790397162166">
+						<Node score="0.0026211558747143006">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
 						</Node>
-						<Node score="4.951809737915693E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="1.5003644704709017E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="34.50000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3652,20 +3672,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-7.160151192809926E-4">
+					<Node score="-5.136742097654308E-4">
 						<True/>
-						<Node score="0.0051520685624850465">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
-							<Node score="0.010054349952764162">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
+						<Node score="0.006429654593882213">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.012638968069736712">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
 							</Node>
 						</Node>
-						<Node score="0.0025053039350902283">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
-						</Node>
-						<Node score="2.0712940526788453E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="0.0025302673362716773">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="66.16666666666667"/>
+							<Node score="-0.009419411561948867">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="66.50000000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3676,20 +3697,21 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-7.022295076927209E-4">
+					<Node score="-6.97208341324234E-4">
 						<True/>
-						<Node score="0.006289247419129563">
+						<Node score="0.0062976615736196175">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.013417832610782065">
+							<Node score="0.013447858553649628">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0024881092691446797">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="0.0025535397545122436">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
-						<Node score="2.2330227987407187E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="1.3635943511541555E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="30.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3698,22 +3720,24 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
+						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-6.351657619105322E-4">
+					<Node score="-5.889649087150706E-4">
 						<True/>
-						<Node score="0.003697686183232987">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.007965121020367923">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="35.50000000000001"/>
-								<Node score="0.013484203406254093">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
-								</Node>
+						<Node score="0.013405184346431275">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0031626099289819676">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
+							</Node>
+							<Node score="0.0071905480201522615">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="6.484183062660646E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="9.16666666666667"/>
+						<Node score="9.19386143054333E-4">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="13.500000000000002"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3724,21 +3748,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-6.97755919752352E-4">
+					<Node score="-5.786414656027772E-4">
 						<True/>
-						<Node score="0.004212708553937273">
+						<Node score="0.005206514925917386">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.008644345065159409">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="575.5000000000001"/>
+							<Node score="0.010206750308971713">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.002612046713880608">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-						</Node>
-						<Node score="2.3001527253215328E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="4.630424603020035E-4">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="0.0030646823177925956">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3749,21 +3773,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.443856654009426E-4">
+					<Node score="-6.962637146013603E-4">
 						<True/>
-						<Node score="0.008886744441525674">
+						<Node score="0.008220799189275457">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0025525243372296925">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
-								<Node score="0.0053391186414485405">
-									<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-								</Node>
+							<Node score="0.0030804555488809135">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
 							</Node>
 						</Node>
-						<Node score="0.001848507174614513">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="-2.624287845944584E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
+							<Node score="0.0012535241740590066">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2.5000000000000004"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3774,21 +3798,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-6.75296466918702E-4">
+					<Node score="-5.645611339479067E-4">
 						<True/>
-						<Node score="0.01297788731097856">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.003039945402297741">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
-							</Node>
-							<Node score="0.006889487118860727">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
+						<Node score="0.005076077066544973">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.009967276413400278">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="2.7283519352018444E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="4.514142508581548E-4">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="0.0029910073167132537">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3799,21 +3823,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-5.438750299197111E-4">
+					<Node score="-5.586987774863565E-4">
 						<True/>
-						<Node score="0.004746612291470771">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.009619732164677387">
+						<Node score="0.0047298820258066055">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="93.50000000000001"/>
+							<Node score="0.008905031984212348">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="45.50000000000001"/>
-								<Node score="-0.0029292654681361257">
-									<SimplePredicate field="lon" operator="greaterThan" value="111.98975000000002"/>
-								</Node>
 							</Node>
 						</Node>
-						<Node score="0.001471924549603948">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
+						<Node score="4.4554626737249866E-4">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="0.0029508083905694653">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3823,21 +3847,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_1024_cases"/>
+						<MiningField name="since_4_cases"/>
 					</MiningSchema>
-					<Node score="-5.374824069066821E-4">
+					<Node score="-5.333717599520265E-4">
 						<True/>
-						<Node score="0.006411264511280207">
+						<Node score="0.0067125909122382355">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.012768995118449221">
+							<Node score="0.012794205807704467">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
+							<Node score="-0.006752155333133743">
+								<SimplePredicate field="since_4_cases" operator="greaterThan" value="71.50000000000001"/>
+							</Node>
 						</Node>
-						<Node score="0.0023914904780692266">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
-						</Node>
-						<Node score="9.908838997229337E-4">
-							<SimplePredicate field="since_1024_cases" operator="lessOrEqual" value="12.500000000000002"/>
+						<Node score="0.0015779336885089605">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3848,20 +3872,21 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.916560749184942E-4">
+					<Node score="-6.466196532650586E-4">
 						<True/>
-						<Node score="0.0035098943837682415">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.007501564169211761">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
-								<Node score="0.012640323246638933">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
-								</Node>
+						<Node score="0.005781824850366018">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.012481572501767374">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="6.054322430116812E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="9.16666666666667"/>
+						<Node score="0.0023511609235009313">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+						</Node>
+						<Node score="1.4038056207870314E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="30.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3871,20 +3896,21 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.672429886408575E-4">
+					<Node score="-5.204233325664888E-4">
 						<True/>
-						<Node score="0.006257637819257912">
+						<Node score="0.006553861877463283">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.012439067341747068">
+							<Node score="0.012466011787320017">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="469.66666666666674"/>
 							</Node>
+							<Node score="-0.006757831563143234">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="58.50000000000001"/>
+							</Node>
 						</Node>
-						<Node score="0.0023339512690025385">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.8333333333333337"/>
-						</Node>
-						<Node score="4.5702733491567E-4">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
+						<Node score="0.001540081221561458">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="0.5000000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3893,24 +3919,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-5.080206887095601E-4">
+					<Node score="-5.584169224721394E-4">
 						<True/>
-						<Node score="0.01247759910558291">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.003093878172881799">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
-							</Node>
-							<Node score="0.0069611476854344045">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="283.6666666666667"/>
+						<Node score="0.0034372493115707504">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.00732608210423232">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
+								<Node score="0.0123973687674154">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.001778888926290486">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="6.544137474639103E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3922,20 +3946,21 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-4.961831691730546E-4">
+					<Node score="-5.915489422026915E-4">
 						<True/>
-						<Node score="0.005572914061195326">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.011956159492588402">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+						<Node score="0.008199987629998108">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0032005310980841354">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
+								<Node score="-0.009509422946408561">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="84.16666666666667"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0027227368423096824">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="4.305395133792855E-4">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="64.83333333333336"/>
-							</Node>
+						<Node score="4.638395500430543E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3946,22 +3971,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lat"/>
 					</MiningSchema>
-					<Node score="-4.20538939621117E-4">
+					<Node score="-5.211607607547197E-4">
 						<True/>
-						<Node score="0.00442189948639561">
+						<Node score="0.004781225026578714">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.008972448586810821">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="45.50000000000001"/>
-								<Node score="-0.0032800392801619217">
-									<SimplePredicate field="lon" operator="greaterThan" value="111.98975000000002"/>
+							<Node score="-0.003468369239829335">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="84.50000000000001"/>
+								<Node score="0.010113220411947964">
+									<SimplePredicate field="lat" operator="greaterThan" value="31.112000000000005"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.002809406662212096">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="15.500000000000002"/>
+						<Node score="0.0013575808226468633">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -3970,22 +3995,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-4.8491618907933645E-4">
+					<Node score="-4.288482719038483E-4">
 						<True/>
-						<Node score="0.005437303446559532">
+						<Node score="0.005451684707966807">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.011684320054696109">
+							<Node score="0.011790109362638595">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0026616901931238207">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="4.269512374167252E-4">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="64.83333333333336"/>
+						<Node score="0.00240214993123879">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+							<Node score="-0.00785039893860719">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="63.50000000000001"/>
 							</Node>
 						</Node>
 					</Node>
@@ -3998,21 +4023,21 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-4.8483245109647857E-4">
+					<Node score="-6.269289609697731E-4">
 						<True/>
-						<Node score="0.011669869210891444">
+						<Node score="0.011776401897870582">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.002721128583215925">
+							<Node score="0.002736641700963548">
 								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
 							</Node>
-							<Node score="0.00618773711881694">
+							<Node score="0.006196810743689522">
 								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0017181565785105944">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="2.599871579482156E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4023,21 +4048,21 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_4_cases"/>
 					</MiningSchema>
-					<Node score="-4.8307743287756967E-4">
+					<Node score="-5.268820174435638E-4">
 						<True/>
-						<Node score="0.00530552736118526">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.011380975160330254">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+						<Node score="0.0035298765699193885">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.008129191793579597">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
+							</Node>
+							<Node score="-0.002100699420439301">
+								<SimplePredicate field="since_4_cases" operator="greaterThan" value="60.50000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.002051152309123662">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
-							<Node score="-3.455279434170814E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="41.540000000000006"/>
-							</Node>
+						<Node score="6.203477412841619E-4">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="1.0000000180025095E-35"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4048,21 +4073,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-6.230515278422565E-4">
+					<Node score="-6.12449201268256E-4">
 						<True/>
-						<Node score="0.004269267323349032">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.008335338305948594">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
+						<Node score="0.011518583676135105">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0026721549754661926">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
+							</Node>
+							<Node score="0.0060369878651329156">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0023303401245245276">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-						</Node>
-						<Node score="1.6623395404443176E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="2.5566955538716186E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4073,21 +4099,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lat"/>
 					</MiningSchema>
-					<Node score="-4.677006612843934E-4">
+					<Node score="-4.930702574386203E-4">
 						<True/>
-						<Node score="0.011476126182313934">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.002393400152836834">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="16.166666666666668"/>
-							</Node>
-							<Node score="0.0058591844377171775">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="469.66666666666674"/>
+						<Node score="0.004575810034535296">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="-0.0038502690501662495">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="97.50000000000001"/>
+								<Node score="0.009640654595466189">
+									<SimplePredicate field="lat" operator="greaterThan" value="31.912850000000002"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0016511226387503648">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.0012939300373085156">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4096,22 +4123,22 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-4.572818655312096E-4">
+					<Node score="-4.0443397318267284E-4">
 						<True/>
-						<Node score="0.00511425776134338">
+						<Node score="0.005138012124895998">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.010996806675383955">
+							<Node score="0.011103582046070428">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0022122865761379073">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="-5.707486993890628E-5">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="32.16666666666668"/>
+						<Node score="0.002275795755334606">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+							<Node score="-0.0077582892580329455">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="63.50000000000001"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4123,20 +4150,20 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.749453442199993E-4">
+					<Node score="-3.9917634061291683E-4">
 						<True/>
-						<Node score="0.0030552037577209505">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
-							<Node score="0.00775105015617874">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="39.50000000000001"/>
+						<Node score="0.005071226385371041">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.010959359036687405">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="8.29946351217202E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
-							<Node score="-3.63454424026403E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="31.732950000000006"/>
+						<Node score="0.002246212980513227">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
+							<Node score="-0.007657914664034711">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="63.50000000000001"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4148,21 +4175,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-5.916434077472979E-4">
+					<Node score="-5.366827388813356E-4">
 						<True/>
-						<Node score="0.004066670618705422">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.007947331678159775">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
+						<Node score="0.007362602017818465">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0028967489119229983">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
+								<Node score="-0.00982856612198399">
+									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="84.16666666666667"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0025997187441524445">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="15.500000000000002"/>
-						</Node>
-						<Node score="1.8949604719114679E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="4.417918381550587E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4173,22 +4201,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-4.462134975127052E-4">
+					<Node score="-4.7171514891963015E-4">
 						<True/>
-						<Node score="0.011010551063909949">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0025036240294539908">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
-							</Node>
-							<Node score="0.005728600406569097">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="283.6666666666667"/>
+						<Node score="0.004183672155383224">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.008277634495974942">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.001584125453148464">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.0020330517375428377">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.206664087403258E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4199,21 +4227,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_64_cases"/>
 					</MiningSchema>
-					<Node score="-4.347559237212018E-4">
+					<Node score="-5.239227479713855E-4">
 						<True/>
-						<Node score="0.011338908281011903">
+						<Node score="0.010928069003947227">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0022497111181914524">
+							<Node score="0.0022544942819170263">
 								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="16.166666666666668"/>
 							</Node>
-							<Node score="0.005568406540419952">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="586.3333333333335"/>
+							<Node score="0.005554987860931349">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="469.66666666666674"/>
 							</Node>
 						</Node>
-						<Node score="0.0017392627651998446">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="4.3247205272622127E-4">
+							<SimplePredicate field="since_64_cases" operator="lessOrEqual" value="20.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4225,19 +4253,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-4.3889487571348974E-4">
+					<Node score="-3.8074248839582193E-4">
 						<True/>
-						<Node score="0.00646887834423275">
+						<Node score="0.005522830692575685">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.0024365295205039965">
+							<Node score="0.0024569980829712112">
 								<SimplePredicate field="lon" operator="greaterThan" value="18.938650000000003"/>
 							</Node>
-						</Node>
-						<Node score="0.0018990455321023303">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
-							<Node score="-4.10165310424924E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="41.540000000000006"/>
+							<Node score="0.009707451672297593">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2162.6666666666674"/>
 							</Node>
+						</Node>
+						<Node score="0.001972166248066114">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4248,21 +4276,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.668902851141243E-4">
+					<Node score="-5.644986978836578E-4">
 						<True/>
-						<Node score="0.004016146457541666">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.007946072422417296">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.006479049565232036">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.00500937306508738">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
+								<Node score="0.0018548340979598046">
+									<SimplePredicate field="since_16_cases" operator="greaterThan" value="22.500000000000004"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0024936563012695682">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="15.500000000000002"/>
-						</Node>
-						<Node score="1.867908107115692E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="2.561958624141115E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4273,22 +4301,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-4.2500391970132814E-4">
+					<Node score="-4.5100092378450745E-4">
 						<True/>
-						<Node score="0.00692280641840282">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0027145569379115487">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
-								<Node score="-0.01035005066197012">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="84.16666666666667"/>
-								</Node>
+						<Node score="0.0039831190641031605">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.007899388779294999">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.001509117964698908">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.001965486888642968">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.2812582818121536E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4299,21 +4327,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_4_cases"/>
 					</MiningSchema>
-					<Node score="-4.167509259184179E-4">
+					<Node score="-4.7580092891110544E-4">
 						<True/>
-						<Node score="0.00626039023156225">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.0023009214556055863">
-								<SimplePredicate field="lon" operator="greaterThan" value="18.938650000000003"/>
+						<Node score="0.0034512952811311926">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.006337574057773436">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
+							</Node>
+							<Node score="3.072883633550632E-5">
+								<SimplePredicate field="since_4_cases" operator="greaterThan" value="35.50000000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.002033540411819892">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="-7.097441334309463E-5">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="32.16666666666668"/>
-							</Node>
+						<Node score="4.977454675883625E-4">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2.5000000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4324,21 +4352,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_4_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-5.477272130474266E-4">
+					<Node score="-5.463432700338365E-4">
 						<True/>
-						<Node score="0.0038696945037653353">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.007682086462715827">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.0067716434023337825">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.0049918402375694676">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
+								<Node score="0.0019314721285867654">
+									<SimplePredicate field="since_4_cases" operator="greaterThan" value="26.500000000000004"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.002641175890237323">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
-						</Node>
-						<Node score="2.0034515715578485E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="2.525348148409361E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4350,20 +4379,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-4.0676761376720475E-4">
+					<Node score="-4.0696523136017106E-4">
 						<True/>
-						<Node score="0.00451174478745572">
+						<Node score="0.004533588806914595">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.009941317100599208">
+							<Node score="0.010016934489752601">
 								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="7.676678254364852E-4">
+						<Node score="0.0020136815076043867">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="0.0032091872104471207">
-								<SimplePredicate field="since_4096_cases" operator="greaterThan" value="2.5000000000000004"/>
+							<Node score="-1.624461768330702E-4">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="32.16666666666668"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4375,21 +4403,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.704077624932172E-4">
+					<Node score="-4.3080708014557774E-4">
 						<True/>
-						<Node score="0.004733277943857412">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.008875170513778455">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="3348.3333333333335"/>
+						<Node score="0.0037963309375275236">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.007542462763749159">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="9.730398852444807E-4">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.003539513913069585">
-								<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+						<Node score="0.0018934944411368399">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.358670392254452E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4401,21 +4429,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-5.3539926418318E-4">
+					<Node score="-3.96948050661387E-4">
 						<True/>
-						<Node score="0.003732528190447923">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.007408083051648474">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.004423135481094914">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.009790778022718856">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.002024582260935463">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-						</Node>
-						<Node score="1.5510887190745706E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="0.0022638580727530975">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
+							<Node score="2.5830573776572824E-4">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="64.83333333333336"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4424,24 +4452,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-3.923698527999716E-4">
+					<Node score="-3.466291671675225E-4">
 						<True/>
-						<Node score="0.004348696699958858">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.009612483789344194">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
+						<Node score="0.004784060301237856">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
+							<Node score="-0.007539505904334585">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="58.50000000000001"/>
+							</Node>
+							<Node score="0.009995779352733221">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="203.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="7.371913021891196E-4">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="0.0031070649605499314">
-								<SimplePredicate field="since_4096_cases" operator="greaterThan" value="2.5000000000000004"/>
-							</Node>
+						<Node score="0.0018449597475490988">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4452,21 +4479,21 @@
 					<MiningSchema>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-5.008399855823392E-4">
+					<Node score="-3.960192936278026E-4">
 						<True/>
-						<Node score="0.004562865049201804">
-							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.008560565976798575">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="3348.3333333333335"/>
+						<Node score="0.0043142918350241284">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.00954126485020591">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.002627170542657464">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
-						</Node>
-						<Node score="2.9455279117830403E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
+						<Node score="0.0017618171647516318">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
+							<Node score="-4.990713060422178E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="41.540000000000006"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4477,22 +4504,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_4_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-3.8989857077535267E-4">
+					<Node score="-5.147897112396652E-4">
 						<True/>
-						<Node score="0.009732557889560041">
+						<Node score="0.006592931868390484">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0021603270196376557">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="603.6666666666669"/>
-							</Node>
-							<Node score="0.004942219222364422">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="283.6666666666667"/>
+							<Node score="0.004792835241095428">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="1003.5000000000001"/>
+								<Node score="0.0018626208055047063">
+									<SimplePredicate field="since_4_cases" operator="greaterThan" value="26.500000000000004"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0013305959730750396">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="20.500000000000004"/>
+						<Node score="2.546427170603576E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4503,21 +4530,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-5.119457983366172E-4">
+					<Node score="-4.074771452210314E-4">
 						<True/>
-						<Node score="0.003429427045661293">
+						<Node score="0.003581652835116765">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.006741867804454774">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1134.1666666666667"/>
+							<Node score="0.007105950408097448">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.0019346427352546019">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
-						</Node>
-						<Node score="1.5102084988644274E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="0.0018109479938754267">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.38534485983981E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4528,22 +4556,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.7292889057010054E-4">
+					<Node score="-4.0217994907916407E-4">
 						<True/>
-						<Node score="0.0095190303722947">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.002091573096505231">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="575.5000000000001"/>
-							</Node>
-							<Node score="0.00479285008735472">
-								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="283.6666666666667"/>
+						<Node score="0.003535097451973022">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.007013605534662484">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
 							</Node>
 						</Node>
-						<Node score="0.0015076507012777086">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="17.500000000000004"/>
+						<Node score="0.0017874071561587864">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.3413409022953097E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4555,20 +4583,19 @@
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
 					</MiningSchema>
-					<Node score="-3.702361571999506E-4">
+					<Node score="-3.698573736577926E-4">
 						<True/>
-						<Node score="0.003841928412492562">
+						<Node score="0.004110755496599092">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.007854273052336885">
-								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="125.83333333333336"/>
+							<Node score="0.00915189252512525">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="6.898311977493838E-4">
+						<Node score="0.0018454867791313984">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="0.002967467104117013">
-								<SimplePredicate field="since_4096_cases" operator="greaterThan" value="2.5000000000000004"/>
+							<Node score="-1.7665578619313762E-4">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="32.16666666666668"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4578,23 +4605,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="fatalities_3days"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-4.914295372181248E-4">
+					<Node score="-3.2261137663041023E-4">
 						<True/>
-						<Node score="0.0034393276575668316">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.006802062069567067">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1320.3333333333337"/>
+						<Node score="0.0044617973455211525">
+							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
+							<Node score="-0.007779324684493063">
+								<SimplePredicate field="since_16_cases" operator="greaterThan" value="58.50000000000001"/>
+							</Node>
+							<Node score="0.009369631939459945">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="203.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.002374188893499541">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
-						</Node>
-						<Node score="1.8874263509551108E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="0.001715502608910489">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4605,22 +4632,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
-						<MiningField name="lon"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-3.669243702941325E-4">
+					<Node score="-4.894842090474765E-4">
 						<True/>
-						<Node score="0.005839581772019928">
+						<Node score="0.0054513405701648344">
 							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0020173894509537492">
+							<Node score="0.004492786711292745">
 								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="575.5000000000001"/>
-							</Node>
-							<Node score="-9.076559787895547E-5">
-								<SimplePredicate field="lon" operator="greaterThan" value="89.04620000000001"/>
+								<Node score="0.001494919607472831">
+									<SimplePredicate field="since_16_cases" operator="greaterThan" value="22.500000000000004"/>
+								</Node>
 							</Node>
 						</Node>
-						<Node score="0.0012513994650517539">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="20.500000000000004"/>
+						<Node score="2.5409242748052584E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4631,20 +4657,20 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
 					</MiningSchema>
-					<Node score="-3.5716839823612137E-4">
+					<Node score="-3.845435290004431E-4">
 						<True/>
-						<Node score="0.00397293147179788">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="0.008142289177172007">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="2785.0000000000005"/>
+						<Node score="0.0035931234576626254">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.007507798872239136">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2513.5000000000005"/>
 							</Node>
 						</Node>
-						<Node score="6.608222430597124E-4">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="0.0028817701697820422">
-								<SimplePredicate field="since_4096_cases" operator="greaterThan" value="2.5000000000000004"/>
+						<Node score="-1.4295243070218553E-5">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="0.0018989923564812293">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
 							</Node>
 						</Node>
 					</Node>
@@ -4656,22 +4682,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
-						<MiningField name="lat"/>
+						<MiningField name="fatalities_3days"/>
 					</MiningSchema>
-					<Node score="-4.7586406257231825E-4">
+					<Node score="-3.522139635439359E-4">
 						<True/>
-						<Node score="0.0027513277754362573">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.005668284412888619">
-								<SimplePredicate field="lat" operator="greaterThan" value="39.92470000000001"/>
+						<Node score="0.003911241752979962">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.008755004112574388">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="252.83333333333334"/>
 							</Node>
 						</Node>
-						<Node score="0.0022984567821819563">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
-						</Node>
-						<Node score="1.8576846014436323E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
+						<Node score="0.0017628603106427602">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
+							<Node score="-1.8216862430934684E-4">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="32.16666666666668"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4680,24 +4705,23 @@
 				<True/>
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
-						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_1_cases"/>
 					</MiningSchema>
-					<Node score="-4.3268607989051087E-4">
+					<Node score="-3.0717970766878613E-4">
 						<True/>
-						<Node score="0.004087031197796723">
+						<Node score="0.004345218465428466">
 							<SimplePredicate field="fatalities_3days" operator="greaterThan" value="13.500000000000002"/>
-							<Node score="0.007743849291503661">
-								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="3348.3333333333335"/>
+							<Node score="-0.0053953859789981915">
+								<SimplePredicate field="since_1_cases" operator="greaterThan" value="81.50000000000001"/>
+							</Node>
+							<Node score="0.008952530520519093">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="283.6666666666667"/>
 							</Node>
 						</Node>
-						<Node score="0.0023892045450525133">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
-						</Node>
-						<Node score="3.509394495974077E-4">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="1.5000000000000002"/>
+						<Node score="0.0016308060298327266">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="79.16666666666667"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4707,23 +4731,23 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
-						<MiningField name="confirmed_3days"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lat"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.500628612558158E-4">
+					<Node score="-3.7169750989413396E-4">
 						<True/>
-						<Node score="0.005668919642781464">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.002238610604978991">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="858.3333333333334"/>
-								<Node score="-0.01102292631096468">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="84.16666666666667"/>
-								</Node>
+						<Node score="0.002682719623325524">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.0055697152540897495">
+								<SimplePredicate field="lat" operator="greaterThan" value="39.92470000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.0011959471967472113">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="20.500000000000004"/>
+						<Node score="0.0016895350782931346">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.518740447968854E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4733,23 +4757,23 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
+						<MiningField name="recovered_1_ago"/>
 						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
-						<MiningField name="lat"/>
+						<MiningField name="since_4_cases"/>
 					</MiningSchema>
-					<Node score="-3.060084765664029E-4">
+					<Node score="-2.9037473609102736E-4">
 						<True/>
-						<Node score="0.0026385713597470634">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.003999765356594139">
-								<SimplePredicate field="lat" operator="greaterThan" value="39.92470000000001"/>
-								<Node score="0.0076461165946656315">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="87.00000000000001"/>
+						<Node score="0.00322716399297497">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.00325733481541802">
+								<SimplePredicate field="fatalities_3days" operator="lessOrEqual" value="16.166666666666668"/>
+								<Node score="7.484176720133926E-4">
+									<SimplePredicate field="since_4_cases" operator="greaterThan" value="31.500000000000004"/>
 								</Node>
 							</Node>
-						</Node>
-						<Node score="0.0017534038402348463">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="0.00636628399267277">
+								<SimplePredicate field="recovered_1_ago" operator="lessOrEqual" value="50935.50000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4760,22 +4784,21 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
-						<MiningField name="since_4096_cases"/>
 						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.373686621357755E-4">
+					<Node score="-3.3608007390732134E-4">
 						<True/>
-						<Node score="0.004839524460581858">
+						<Node score="0.00387967749209012">
 							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="-2.802457619901641E-4">
+							<Node score="-2.645063274547252E-4">
 								<SimplePredicate field="lon" operator="greaterThan" value="53.50000000000001"/>
 							</Node>
-						</Node>
-						<Node score="6.186484404744745E-4">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
-							<Node score="0.0027472726418062694">
-								<SimplePredicate field="since_4096_cases" operator="greaterThan" value="2.5000000000000004"/>
+							<Node score="0.006965537393811083">
+								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="856.5000000000001"/>
 							</Node>
+						</Node>
+						<Node score="0.001079359642183084">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4787,19 +4810,19 @@
 						<MiningField name="confirmed_3days"/>
 						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.393860576948551E-4">
+					<Node score="-4.2418950444550544E-4">
 						<True/>
-						<Node score="0.004776618378946456">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
-							<Node score="-2.7660640064984727E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="53.50000000000001"/>
+						<Node score="0.002948266023367643">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="127.83333333333336"/>
+							<Node score="0.0056913123300312545">
+								<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1003.5000000000001"/>
+							</Node>
+							<Node score="3.111447408176762E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="25.742900000000002"/>
 							</Node>
 						</Node>
-						<Node score="0.0015787643498951847">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="28.83333333333334"/>
-							<Node score="-5.86329587256609E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="41.540000000000006"/>
-							</Node>
+						<Node score="2.700334576979627E-4">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="2.8333333333333335"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4809,22 +4832,23 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
-						<MiningField name="recovered_1_ago"/>
-						<MiningField name="since_4096_cases"/>
+						<MiningField name="since_256_cases"/>
+						<MiningField name="lat"/>
+						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-3.341043526869848E-4">
+					<Node score="-3.55759236315151E-4">
 						<True/>
-						<Node score="0.0017414444707828764">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0032233020472563012">
-								<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="200.50000000000003"/>
-								<Node score="0.006583131054441557">
-									<SimplePredicate field="recovered_1_ago" operator="lessOrEqual" value="44564.50000000001"/>
-								</Node>
+						<Node score="0.002540790433402512">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
+							<Node score="0.005328623946050814">
+								<SimplePredicate field="lat" operator="greaterThan" value="39.92470000000001"/>
 							</Node>
 						</Node>
-						<Node score="0.0011421650825400272">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="20.500000000000004"/>
+						<Node score="0.0016341286773697695">
+							<SimplePredicate field="since_256_cases" operator="lessOrEqual" value="19.500000000000004"/>
+							<Node score="-3.5123401648197043E-4">
+								<SimplePredicate field="lon" operator="greaterThan" value="32.71495000000001"/>
+							</Node>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4834,23 +4858,23 @@
 				<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction">
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
-						<MiningField name="fatalities_3days"/>
-						<MiningField name="since_4096_cases"/>
-						<MiningField name="lat"/>
+						<MiningField name="confirmed_3days"/>
+						<MiningField name="since_4_cases"/>
+						<MiningField name="since_16_cases"/>
 					</MiningSchema>
-					<Node score="-2.74372427950981E-4">
+					<Node score="-4.4857157360933417E-4">
 						<True/>
-						<Node score="0.00249505696886475">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="94.50000000000001"/>
-							<Node score="0.0038081392886379134">
-								<SimplePredicate field="lat" operator="greaterThan" value="39.92470000000001"/>
-								<Node score="0.0073558714133617155">
-									<SimplePredicate field="fatalities_3days" operator="greaterThan" value="87.00000000000001"/>
+						<Node score="0.00560749587821264">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
+							<Node score="0.004316761170340839">
+								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="1003.5000000000001"/>
+								<Node score="0.0014998734637066795">
+									<SimplePredicate field="since_4_cases" operator="greaterThan" value="26.500000000000004"/>
 								</Node>
 							</Node>
 						</Node>
-						<Node score="0.002132440650793661">
-							<SimplePredicate field="since_4096_cases" operator="lessOrEqual" value="13.500000000000002"/>
+						<Node score="2.565171385022503E-4">
+							<SimplePredicate field="since_16_cases" operator="lessOrEqual" value="27.500000000000004"/>
 						</Node>
 					</Node>
 				</TreeModel>
@@ -4861,21 +4885,22 @@
 					<MiningSchema>
 						<MiningField name="fatalities_1_ago"/>
 						<MiningField name="confirmed_3days"/>
+						<MiningField name="fatalities_3days"/>
 						<MiningField name="lon"/>
 					</MiningSchema>
-					<Node score="-4.390747618629064E-4">
+					<Node score="-3.2037186573328016E-4">
 						<True/>
-						<Node score="0.00554179181081795">
-							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="23.500000000000004"/>
-							<Node score="0.0020197926227228657">
-								<SimplePredicate field="confirmed_3days" operator="lessOrEqual" value="1003.5000000000001"/>
+						<Node score="0.0038925126875931698">
+							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="329.6666666666667"/>
+							<Node score="0.0013570812829349968">
+								<SimplePredicate field="lon" operator="greaterThan" value="18.938650000000003"/>
+							</Node>
+							<Node score="0.007239278806155324">
+								<SimplePredicate field="fatalities_3days" operator="greaterThan" value="87.00000000000001"/>
 							</Node>
 						</Node>
-						<Node score="5.803676351436702E-4">
-							<SimplePredicate field="confirmed_3days" operator="greaterThan" value="1.8333333333333337"/>
-							<Node score="-5.36664343815229E-4">
-								<SimplePredicate field="lon" operator="greaterThan" value="46.53435000000001"/>
-							</Node>
+						<Node score="0.0010275513192968772">
+							<SimplePredicate field="fatalities_1_ago" operator="greaterThan" value="7.500000000000001"/>
 						</Node>
 					</Node>
 				</TreeModel>

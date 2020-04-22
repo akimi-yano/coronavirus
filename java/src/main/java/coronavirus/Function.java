@@ -20,6 +20,8 @@ import org.dmg.pmml.FieldName;
 
 /**
  * Azure Functions with HTTP Trigger.
+ * Run: `mvn clean package && mvn azure-functions:run`
+ * Deploy: `mvn azure-functions:deploy`
  */
 public class Function {
 
@@ -37,6 +39,47 @@ public class Function {
         }
 
         return request.createResponseBuilder(HttpStatus.OK).body(locations).build();
+    }
+    /**
+     * This function listens at endpoint "/api/HttpTrigger-Java". Two ways to invoke it using "curl" command in bash:
+     * 1. curl -d "HTTP Body" {your host}/api/HttpTrigger-Java&code={your function key}
+     * 2. curl "{your host}/api/HttpTrigger-Java?name=HTTP%20Query&code={your function key}"
+     * Function Key is not needed when running locally, it is used to invoke function deployed to Azure.
+     * More details: https://aka.ms/functions_authorization_keys
+     */
+    @FunctionName("predictAll")
+    public HttpResponseMessage predictAll(
+            @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request.");
+
+        // params
+        String country = request.getQueryParameters().get("country");
+        String province = request.getQueryParameters().get("province");
+        if (country == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass params").build();
+        }
+        // empty provinces are allowed
+        if (province == null) {
+            province = "";
+        }
+
+        // Hacky way to generate json response
+        String body = "{";
+        try {
+            int numPredictions = new File(Paths.get(getTestPath("1")).getParent().toString())
+            .listFiles().length;
+            for(Integer ago = 1; ago <= numPredictions; ago++) {
+                String prediction = evaluate(context, ago.toString(), country, province);
+                body += "\"" + ago.toString() + "\": " + prediction
+                + (ago != numPredictions ? "," : "");
+            }
+            body += "}";
+        } catch (Exception e) {
+            context.getLogger().warning(ExceptionUtils.getStackTrace(e));
+        }
+
+        return request.createResponseBuilder(HttpStatus.OK).body(body).build();
     }
 
     /**

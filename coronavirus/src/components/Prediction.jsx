@@ -5,26 +5,39 @@ const Prediction = () => {
     const [state, setState] = useState()
     const [country, setCountry] = useState()
     const [province, setProvince] = useState()
+    const [prediction, setPrediction] = useState()
     useEffect(() => {
         Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/locations')
-
             .then(response => {
                 setState(response.data)
-                console.log("HERE " + response.data)
             })
 
             .catch(error => console.log(error));
     }, [])
 
+    const getPrediction = (e) => {
+        e.preventDefault()
+        Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAll'
+        + `?country=${country}` + (province ? `&province=${province}` : ""))
+            .then(response => {
+                setPrediction(response.data)
+            })
+
+            .catch(error => console.log(error));
+    }
+
     return (
         <div>
             <p>choose a country to predict</p>
             Current country: {country}
-            <form>
+            <form onSubmit={getPrediction}>
                 {state != null ?
                     <div>
 
-                        <select name="country" onChange={e => setCountry(e.target.value)}>
+                        <select name="country" onChange={e => {
+                            setCountry(e.target.value)
+                            setProvince(null)
+                            }}>
                             (<option value="">--select a country--</option>)
                     {state.countries.map((item, index) =>
                             (<option value={item.name}>{item.name}</option>)
@@ -60,6 +73,12 @@ const Prediction = () => {
 
                 <button type="submit">Predict</button>
             </form>
+                {prediction ?
+                <div>
+                <p>Predicted Confirmed Cases: {prediction.confirmed}</p>
+                <p>Predicted Fatalities: {prediction.fatalities}</p>
+                </div>
+                : ""}
 
         </div>
     )

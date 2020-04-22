@@ -40,15 +40,9 @@ public class Function {
 
         return request.createResponseBuilder(HttpStatus.OK).body(locations).build();
     }
-    /**
-     * This function listens at endpoint "/api/HttpTrigger-Java". Two ways to invoke it using "curl" command in bash:
-     * 1. curl -d "HTTP Body" {your host}/api/HttpTrigger-Java&code={your function key}
-     * 2. curl "{your host}/api/HttpTrigger-Java?name=HTTP%20Query&code={your function key}"
-     * Function Key is not needed when running locally, it is used to invoke function deployed to Azure.
-     * More details: https://aka.ms/functions_authorization_keys
-     */
-    @FunctionName("predictAll")
-    public HttpResponseMessage predictAll(
+
+    @FunctionName("predictAllDays")
+    public HttpResponseMessage predictAllDays(
             @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
         context.getLogger().info("Java HTTP trigger processed a request.");
@@ -75,6 +69,28 @@ public class Function {
                 + (ago != numPredictions ? "," : "");
             }
             body += "]}";
+        } catch (Exception e) {
+            context.getLogger().warning(ExceptionUtils.getStackTrace(e));
+        }
+
+        return request.createResponseBuilder(HttpStatus.OK).body(body).build();
+    }
+
+    @FunctionName("predictAllLocations")
+    public HttpResponseMessage predictAllLocations(
+            @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request.");
+
+        // params
+        String ago = request.getQueryParameters().get("ago");
+        if (ago == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass params").build();
+        }
+
+        String body = "";
+        try {
+            body = evaluateAll(context, ago);
         } catch (Exception e) {
             context.getLogger().warning(ExceptionUtils.getStackTrace(e));
         }
@@ -208,6 +224,87 @@ public class Function {
         }
 
         return jsonBuilder.build().toString();
+    }
+
+    public String evaluateAll(ExecutionContext context, String ago) throws Exception {
+        // Reading a record from the data source
+        List<? extends Map<FieldName, ?>> inputRecords = readRecords(context, ago);
+
+
+        Evaluator confirmedEvaluator = new LoadingModelEvaluatorBuilder()
+        .load(new File(getModelPath(ago, "confirmed")))
+        .build();
+        Evaluator fatalitiesEvaluator = new LoadingModelEvaluatorBuilder()
+        .load(new File(getModelPath(ago, "fatalities")))
+        .build();
+        Map<String, Evaluator> toPredictsMap  = new HashMap();
+        toPredictsMap.put("confirmed", confirmedEvaluator);
+        toPredictsMap.put("fatalities", fatalitiesEvaluator);
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for(Map<FieldName, ?> inputRecord : inputRecords) {
+            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+            // Add location columns to response and drop from record for prediction
+            jsonBuilder.add("province", inputRecord.get(FieldName.create("Province_State")).toString());
+            jsonBuilder.add("country", inputRecord.get(FieldName.create("Country_Region")).toString());
+            inputRecord.remove(FieldName.create("Province_State"));
+            inputRecord.remove(FieldName.create("Country_Region"));
+            for (Map.Entry<String, Evaluator> toPredictEntry : toPredictsMap.entrySet()) {
+                String toPredict = toPredictEntry.getKey();
+                String toPredictAgo = toPredict + "_" + ago + "_ago";
+                Double startValue = Double.parseDouble(inputRecord.get(FieldName.create(toPredictAgo)).toString());
+                Evaluator evaluator = toPredictEntry.getValue();
+                // Perforing the self-check
+                evaluator.verify();
+    
+                // Printing input (x1, x2, .., xn) fields
+                List<? extends InputField> inputFields = evaluator.getInputFields();
+    
+                Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
+    
+                // Mapping the record field-by-field from data source schema to PMML schema
+                for(InputField inputField : inputFields){
+                    FieldName inputName = inputField.getName();
+    
+                    Object rawValue = inputRecord.get(inputName);
+    
+                    // Transforming an arbitrary user-supplied value to a known-good PMML value
+                    FieldValue inputValue = null;
+                    try {
+                        inputValue = inputField.prepare(rawValue);
+                    } catch(Exception e) {
+                        context.getLogger()
+                        .warning("can't parse value for field '" + inputName.toString() + "': " + rawValue.toString());
+                    }
+    
+                    arguments.put(inputName, inputValue);
+                }
+    
+                // Evaluating the model with known-good arguments
+                Map<FieldName, ?> results = evaluator.evaluate(arguments);
+    
+                // Decoupling results from the JPMML-Evaluator runtime environment
+                Map<String, ?> resultRecord = EvaluatorUtil.decodeAll(results);
+    
+                // Writing a record to the data sink
+                String value = writeRecord(context, resultRecord, toPredict, startValue);
+                jsonBuilder.add(toPredict, value);
+            }
+            arrayBuilder.add(jsonBuilder);
+        }
+
+        return Json.createObjectBuilder().add("locations", arrayBuilder).build().toString();
+    }
+
+    // TODO
+    public List<? extends Map<FieldName, ?>> readRecords(ExecutionContext context, String ago) throws Exception {
+        File file = new File(getTestPath(ago));
+        InputStream is = new FileInputStream(file);
+        CsvUtil.Table inputTable = CsvUtil.readTable(is, ";");
+        List<String> missingValues = Arrays.asList("N/A", "NA");
+        List<? extends Map<FieldName, ?>> inputRecords = BatchUtil.parseRecords(inputTable,
+        createCellParser(!missingValues.isEmpty() ? new HashSet<>(missingValues) : null));
+        return inputRecords;
     }
 
     // TODO

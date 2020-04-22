@@ -73,11 +73,12 @@ const Prediction = () => {
 
                 <button type="submit">Predict</button>
             </form>
-                {prediction ?
+                {prediction ? prediction.predictions.map((item, index) =>
                 <div>
-                <p>Predicted Confirmed Cases: {prediction.confirmed}</p>
-                <p>Predicted Fatalities: {prediction.fatalities}</p>
-                </div>
+<p>Predicted Confirmed Cases: {item.confirmed}</p>
+<p>Predicted Fatalities: {item.fatalities}</p>
+</div>
+                )
                 : ""}
 
         </div>

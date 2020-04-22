@@ -65,16 +65,16 @@ public class Function {
         }
 
         // Hacky way to generate json response
-        String body = "{";
+        String body = "{\"predictions\": [";
         try {
             int numPredictions = new File(Paths.get(getTestPath("1")).getParent().toString())
             .listFiles().length;
             for(Integer ago = 1; ago <= numPredictions; ago++) {
                 String prediction = evaluate(context, ago.toString(), country, province);
-                body += "\"" + ago.toString() + "\": " + prediction
+                body += prediction
                 + (ago != numPredictions ? "," : "");
             }
-            body += "}";
+            body += "]}";
         } catch (Exception e) {
             context.getLogger().warning(ExceptionUtils.getStackTrace(e));
         }

@@ -4,6 +4,7 @@ import L from 'mapbox.js'
 import countriesLayer from '../data/world'
 import mapboxConfig from '../config/mapboxConfig.js'
 // import { navigate } from "@reach/router"
+import Axios from 'axios'
 
 let map
 let geojson
@@ -11,6 +12,16 @@ let geojson
 const Map = (props) => {
     // const context = useContext(Context)
     const [highlightedCountry, setHighlightedCountry] = useState("")
+    const [predictions, setPredictions] = useState([])
+
+    useEffect(() => {
+        Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllLocations'
+            + `?ago=1`)
+            .then(response => {
+                setPredictions(response.data.locations)
+            })
+            .catch(error => console.log(error))
+    }, [])
 
     useEffect(() => {
         map = L.map('map').setView([51.505, -50.50], 3);
@@ -24,6 +35,17 @@ const Map = (props) => {
             mapboxAccessToken: mapboxConfig.accessToken,
         }).addTo(map);
     }, [])
+
+    useEffect(() => {
+        predictions.map((item, index) => {
+            L.circle([item.lat, item.lon], {
+                color: "red",
+                fillColor: "#f03",
+                fillOpacity: 0.5,
+                radius: Math.log(item.confirmed + 1) * 10000
+            }).addTo(map);
+        })
+    }, [predictions])
 
     // useEffect(() => {
     //     if (context.db) {

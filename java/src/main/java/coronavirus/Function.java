@@ -247,6 +247,8 @@ public class Function {
             // Add location columns to response and drop from record for prediction
             jsonBuilder.add("province", inputRecord.get(FieldName.create("Province_State")).toString());
             jsonBuilder.add("country", inputRecord.get(FieldName.create("Country_Region")).toString());
+            jsonBuilder.add("lat", inputRecord.get(FieldName.create("lat")).toString());
+            jsonBuilder.add("lon", inputRecord.get(FieldName.create("lon")).toString());
             inputRecord.remove(FieldName.create("Province_State"));
             inputRecord.remove(FieldName.create("Country_Region"));
             for (Map.Entry<String, Evaluator> toPredictEntry : toPredictsMap.entrySet()) {

@@ -13,6 +13,9 @@ import com.microsoft.azure.functions.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.stream.*;
+import java.time.*;
+import java.time.format.*;
+import java.time.temporal.*;
 import  javax.json.*;
 import org.apache.commons.lang3.exception.*;
 import org.jpmml.evaluator.*;
@@ -24,6 +27,31 @@ import org.dmg.pmml.FieldName;
  * Deploy: `mvn azure-functions:deploy`
  */
 public class Function {
+
+    @FunctionName("dates")
+    public HttpResponseMessage dates(
+            @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request.");
+
+        JsonArrayBuilder datesBuilder = Json.createArrayBuilder();
+        try {
+
+            int numDates = new File(Paths.get(getTestPath("1")).getParent().toString())
+            .listFiles().length;
+            LocalDate endDate = getEndDate();
+            for (int i = 1; i <= numDates; i++) {
+                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+                jsonBuilder.add("date", endDate.plusDays(i).toString());
+                datesBuilder.add(jsonBuilder);
+            }
+        } catch (Exception e) {
+            context.getLogger().warning(ExceptionUtils.getStackTrace(e));
+        }
+
+        String dates = Json.createObjectBuilder().add("dates", datesBuilder).build().toString();
+        return request.createResponseBuilder(HttpStatus.OK).body(dates).build();
+    }
 
     @FunctionName("locations")
     public HttpResponseMessage locations(
@@ -83,19 +111,27 @@ public class Function {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
         // params
-        String ago = request.getQueryParameters().get("ago");
-        if (ago == null) {
+        String date = request.getQueryParameters().get("date");
+        if (date == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass params").build();
         }
 
         String body = "";
         try {
-            body = evaluateAll(context, ago);
+            String ago = getAgo(date);
+            body = evaluateAll(context, date, ago);
         } catch (Exception e) {
             context.getLogger().warning(ExceptionUtils.getStackTrace(e));
         }
 
         return request.createResponseBuilder(HttpStatus.OK).body(body).build();
+    }
+
+    public String getAgo(String dateStr) throws Exception{
+        LocalDate endDate = getEndDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate targetDate = LocalDate.parse(dateStr, formatter);
+        return new Long(ChronoUnit.DAYS.between(endDate, targetDate)).toString();
     }
 
     /**
@@ -131,6 +167,24 @@ public class Function {
         }
 
         return request.createResponseBuilder(HttpStatus.OK).body(body).build();
+    }
+
+    public LocalDate getEndDate() throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(getDatePath()));
+        String endDate = reader.readLine();
+        reader.close();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(endDate, formatter);
+    }
+
+    public String getDatePath() throws Exception {
+        String date = "date.txt";
+        // get model path
+        String binPath =
+        new File(Function.class.getProtectionDomain().getCodeSource().getLocation()
+        .toURI()).getPath();
+        binPath = Paths.get(binPath).getParent().toString();
+        return Paths.get(binPath, "models", date).toString();
     }
 
     public String getLocations(ExecutionContext context) throws Exception {
@@ -221,12 +275,13 @@ public class Function {
             // Writing a record to the data sink
             String value = writeRecord(context, resultRecord, toPredict, startValue);
             jsonBuilder.add(toPredict, value);
+            jsonBuilder.add("date", getEndDate().plusDays(Integer.parseInt(ago)).toString());
         }
 
         return jsonBuilder.build().toString();
     }
 
-    public String evaluateAll(ExecutionContext context, String ago) throws Exception {
+    public String evaluateAll(ExecutionContext context, String date, String ago) throws Exception {
         // Reading a record from the data source
         List<? extends Map<FieldName, ?>> inputRecords = readRecords(context, ago);
 
@@ -295,7 +350,10 @@ public class Function {
             arrayBuilder.add(jsonBuilder);
         }
 
-        return Json.createObjectBuilder().add("locations", arrayBuilder).build().toString();
+        return Json.createObjectBuilder()
+        .add("date", date)
+        .add("locations", arrayBuilder)
+        .build().toString();
     }
 
     // TODO

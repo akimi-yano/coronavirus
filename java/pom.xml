@@ -231,9 +231,7 @@
                                     <includes>
                                         <include>host.json</include>
                                         <include>local.settings.json</include>
-                                        <include>models/confirmed/**.pmml</include>
-                                        <include>models/fatalities/**.pmml</include>
-                                        <include>models/test/**.csv</include>
+                                        <include>models/**</include>
                                     </includes>
                                 </resource>
                             </resources>

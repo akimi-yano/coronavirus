@@ -8,20 +8,12 @@ import Axios from 'axios'
 
 let map
 let geojson
+let labels = []
 
 const Map = (props) => {
     // const context = useContext(Context)
     const [highlightedCountry, setHighlightedCountry] = useState("")
-    const [predictions, setPredictions] = useState([])
-
-    useEffect(() => {
-        Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllLocations'
-            + `?ago=1`)
-            .then(response => {
-                setPredictions(response.data.locations)
-            })
-            .catch(error => console.log(error))
-    }, [])
+    const [circles, setCircles] = useState({})
 
     useEffect(() => {
         map = L.map('map').setView([51.505, -50.50], 3);
@@ -29,7 +21,7 @@ const Map = (props) => {
         L.tileLayer('https://api.mapbox.com/styles/v1/{user_name}/{style_id}/tiles/256/{z}/{x}/{y}?access_token={mapboxAccessToken}', {
             attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
             minZoom: 2,
-            maxZoom: 4,
+            maxZoom: 6,
             style_id: "ck7zc036p09bw1imsbnw9ibjd",
             user_name: mapboxConfig.userName,
             mapboxAccessToken: mapboxConfig.accessToken,
@@ -37,15 +29,31 @@ const Map = (props) => {
     }, [])
 
     useEffect(() => {
-        predictions.map((item, index) => {
-            L.circle([item.lat, item.lon], {
-                color: "red",
-                fillColor: "#f03",
-                fillOpacity: 0.5,
-                radius: Math.log(item.confirmed + 1) * 10000
-            }).addTo(map);
+        if (props.worldPrediction) {
+            updateMap(props.worldPrediction)
+
+            map.on('zoom', () => {
+                updateMap(props.worldPrediction)
+            })
+        }
+    }, [props.worldPrediction])
+
+    const updateMap = (worldPrediction) => {
+        labels.forEach((item, index) => map.removeLayer(item))
+    
+        let newLabels = []
+        worldPrediction.map((item, index) => {
+            newLabels.push(
+                L.circle([item.lat, item.lon], {
+                    color: "yellow",
+                    // fillColor: "#f03",
+                    fillOpacity: 0.5,
+                    radius: Math.log(item.confirmed + 1) * 70000 / map.getZoom(),
+                }))
         })
-    }, [predictions])
+        newLabels.forEach((newLabel, index) => newLabel.addTo(map))
+        labels = newLabels
+    }
 
     // useEffect(() => {
     //     if (context.db) {
@@ -131,15 +139,14 @@ const Map = (props) => {
     //     navigate('/')
     //     }
     return (
-        <div>
+        <div className="center-column-container">
             {/* <div className="userName">{context.name}</div> */}
-            <div className="countryName">{highlightedCountry}</div>
             <div className="container" id="map"></div>
             <div style={{ zIndex: '2', position: "fixed", bottom: '50px', left: '50px', position: 'absolute', border: "1px solid transparent", margin: "auto", width: '80px', height: '80px', borderRadius: "50%" }}>
-            {/* <div onClick={e=>returnHandler()} style={{zIndex: '2', position: "fixed", bottom: '-70%', left: '200%',position: 'absolute' }}> */}
-            {/* <img style={{width: '150px'}} src={process.env.PUBLIC_URL + '/speechBubble.png'} />
+                {/* <div onClick={e=>returnHandler()} style={{zIndex: '2', position: "fixed", bottom: '-70%', left: '200%',position: 'absolute' }}> */}
+                {/* <img style={{width: '150px'}} src={process.env.PUBLIC_URL + '/speechBubble.png'} />
             <p style={{position: 'absolute', bottom: '36%', margin: '10px',  maxWidth: '180px', fontFamily: "'Chelsea Market', cursive", }}>Click this to change name and avatar</p> */}
-            {/* </div> */}
+                {/* </div> */}
 
 
             </div>

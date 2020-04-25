@@ -37,18 +37,6 @@
   }
 }
 
-#map {
-  position: absolute;
-  /* top: 64px;
-  left: 0;
-  right: 0; */
-  /* bottom: 0; */
-  width: 100%;
-  height: 100%;
-  z-index: 1; 
-  background-color: rgb(32,32,32);
-}
-
 
 
 .dropdown-submenu {
@@ -97,4 +85,32 @@
   -webkit-border-radius: 6px 0 6px 6px;
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
+}
+
+#map {
+  /* position: absolute; */
+  /* top: 64px;
+  left: 0;
+  right: 0; */
+  /* bottom: 0; */
+  width: 70vw;
+  height: 80vh;
+  z-index: 1; 
+  background-color: rgb(32,32,32);
+}
+
+.title-container {
+  text-align: center;
+}
+
+.left-column-container {
+  display: inline-block;
+}
+
+.center-column-container {
+  display: inline-block;
+}
+
+.right-column-container {
+  display: inline-block;
 }

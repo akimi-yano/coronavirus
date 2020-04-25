@@ -195,34 +195,14 @@ public class Function {
         List<? extends Map<FieldName, ?>> inputRecords = BatchUtil.parseRecords(inputTable, createCellParser(!missingValues.isEmpty() ? new HashSet<>(missingValues) : null));
 
         // lookup record based on Country & Province
-        Map<String, List<String>> locations = new HashMap();
+        JsonArrayBuilder locations = Json.createArrayBuilder();
         inputRecords.stream().forEach(record -> {
             String province = record.get(FieldName.create("Province_State")).toString();
             String country = record.get(FieldName.create("Country_Region")).toString();
-            if (locations.containsKey(country)) {
-                locations.get(country).add(province);
-            } else {
-                ArrayList<String> provinces = new ArrayList();
-                provinces.add(province);
-                locations.put(country, provinces);
-            }
+            locations.add(Json.createObjectBuilder().add("country", country).add("province", province));
         });
-        JsonArrayBuilder countries = Json.createArrayBuilder();
-        for (Map.Entry<String,List<String>> entry : locations.entrySet()) {
-            JsonArrayBuilder provincesBuilder = Json.createArrayBuilder();
-            for (String province : entry.getValue()) {
-                if (!"".equals(province)) {
-                    provincesBuilder = provincesBuilder.add(
-                        Json.createObjectBuilder().add("name", province));
-                }
-            }
-            JsonObjectBuilder countryBuilder = Json.createObjectBuilder()
-            .add("name", entry.getKey())
-            .add("provinces", provincesBuilder);
-            countries.add(countryBuilder);
-        }
 
-        return Json.createObjectBuilder().add("countries", countries).build().toString();
+        return Json.createObjectBuilder().add("locations", locations).build().toString();
     }
 
     public String evaluate(ExecutionContext context,

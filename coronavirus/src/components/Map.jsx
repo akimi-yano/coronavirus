@@ -1,59 +1,97 @@
 import React, { useState, useEffect, useContext } from 'react';
 // import Context from '../context/Context'
-import L from 'mapbox.js'
+import mapboxgl from 'mapbox-gl'
 import countriesLayer from '../data/world'
 import mapboxConfig from '../config/mapboxConfig.js'
 // import { navigate } from "@reach/router"
 import Axios from 'axios'
 
 let map
-let geojson
-let labels = []
+
+const COLORS = {confirmed: 'yellow', fatalities: 'red'}
 
 const Map = (props) => {
     // const context = useContext(Context)
     const [highlightedCountry, setHighlightedCountry] = useState("")
-    const [circles, setCircles] = useState({})
+    const [layerId, setLayerId] = useState('0')
 
     useEffect(() => {
-        map = L.map('map').setView([51.505, -50.50], 3);
-        // let myMap = L.map("worldMap").setView([40, -74.50], 9);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{user_name}/{style_id}/tiles/256/{z}/{x}/{y}?access_token={mapboxAccessToken}', {
-            attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-            minZoom: 2,
-            maxZoom: 6,
-            style_id: "ck7zc036p09bw1imsbnw9ibjd",
+        map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/akihime/ck7zc036p09bw1imsbnw9ibjd',
+            center: [-74.50, 40],
+            zoom: 2,
             user_name: mapboxConfig.userName,
-            mapboxAccessToken: mapboxConfig.accessToken,
-        }).addTo(map);
+            accessToken: mapboxConfig.accessToken
+        })
+        // // let myMap = L.map("worldMap").setView([40, -74.50], 9);
+        // L.tileLayer('https://api.mapbox.com/styles/v1/{user_name}/{style_id}/tiles/256/{z}/{x}/{y}?access_token={mapboxAccessToken}', {
+        //     attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+        //     minZoom: 2,
+        //     maxZoom: 6,
+        //     style_id: "ck7zc036p09bw1imsbnw9ibjd",
+        // }).addTo(map);
     }, [])
 
     useEffect(() => {
+
         if (props.worldPrediction) {
-            updateMap(props.worldPrediction)
-
-            map.on('zoom', () => {
-                updateMap(props.worldPrediction)
+            if (layerId > 0) {
+                map.removeLayer(layerId)
+                map.removeSource(layerId)
+            }
+            let geoData = {
+                'type': 'FeatureCollection'
+            }
+            let features = []
+            props.worldPrediction.map((item, index) => {
+                features.push({
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': [item.lon, item.lat]
+                    },
+                    'properties': {
+                        'title': item.country + item.province,
+                        'radius': Math.log(parseInt(item[props.metric]) + 1)
+                        // 'radius': parseInt(item[props.metric]) * 0.0001
+                    }
+                })
             })
-        }
-    }, [props.worldPrediction])
 
-    const updateMap = (worldPrediction) => {
-        labels.forEach((item, index) => map.removeLayer(item))
-    
-        let newLabels = []
-        worldPrediction.map((item, index) => {
-            newLabels.push(
-                L.circle([item.lat, item.lon], {
-                    color: "yellow",
-                    // fillColor: "#f03",
-                    fillOpacity: 0.5,
-                    radius: Math.log(item.confirmed + 1) * 70000 / map.getZoom(),
-                }))
-        })
-        newLabels.forEach((newLabel, index) => newLabel.addTo(map))
-        labels = newLabels
-    }
+            let newLayerId = (parseInt(layerId) + 1).toString()
+            geoData['features'] = features
+            map.addSource(newLayerId, {
+                'type': 'geojson',
+                'data': geoData
+            })
+            map.addLayer({
+                'id': newLayerId,
+                'type': 'circle',
+                'source': newLayerId,
+                // 'layout':  {
+                //     'text-field': ['get', 'title']
+                // },
+                'paint': {
+                    'circle-radius': ['get', 'radius'],
+                    'circle-color': COLORS[props.metric],
+                    'circle-opacity': 0.5,
+                    'circle-stroke-color': COLORS[props.metric],
+                    'circle-stroke-width': 1,
+                    'circle-stroke-opacity': 1
+                }
+            })
+            setLayerId(newLayerId)
+        }
+    }, [props.worldPrediction, props.metric])
+
+    useEffect(() => {
+        if(props.lonlat) {
+            map.flyTo(
+                {center: [props.lonlat[0], props.lonlat[1]], essential: true, zoom: 4, speed: 0.5, curve: 1}
+            )
+        }
+    }, [props.lonlat])
 
     // useEffect(() => {
     //     if (context.db) {
@@ -88,25 +126,6 @@ const Map = (props) => {
     //         })
     //     }
     // }, [context.db])
-
-    const highlightFeature = (e) => {
-        let layer = e.target;
-        let country = layer.feature.properties.name
-
-        setHighlightedCountry(country)
-
-        layer.setStyle(
-            {
-                weight: 3,
-                // fillColor: '#0082E6',
-                fillColor: 'white',
-                fillOpacity: 0.8
-            }
-        )
-        if (!L.Browser.ie && !L.Browser.opera) {
-            layer.bringToFront();
-        }
-    }
 
     const zoomToFeature = (clickEvent) => {
         let countryObject = clickEvent.target

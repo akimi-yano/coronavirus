@@ -254,7 +254,7 @@ public class Function {
 
             // Writing a record to the data sink
             String value = writeRecord(context, resultRecord, toPredict, startValue);
-            jsonBuilder.add(toPredict, value);
+            jsonBuilder.add(toPredict, Math.round(Double.parseDouble(value)));
             jsonBuilder.add("date", getEndDate().plusDays(Integer.parseInt(ago)).toString());
         }
 
@@ -325,7 +325,7 @@ public class Function {
     
                 // Writing a record to the data sink
                 String value = writeRecord(context, resultRecord, toPredict, startValue);
-                jsonBuilder.add(toPredict, value);
+                jsonBuilder.add(toPredict, Math.round(Double.parseDouble(value)));
             }
             arrayBuilder.add(jsonBuilder);
         }

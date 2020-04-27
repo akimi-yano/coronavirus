@@ -12,6 +12,7 @@
     "mapbox.js": "^3.3.0",
     "moment": "^2.24.0",
     "react": "^16.13.1",
+    "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",

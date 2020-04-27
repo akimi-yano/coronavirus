@@ -160,6 +160,7 @@ const Map = (props) => {
     return (
         <div className="center-column-container">
             {/* <div className="userName">{context.name}</div> */}
+
             <div className="container" id="map"></div>
             <div style={{ zIndex: '2', position: "fixed", bottom: '50px', left: '50px', position: 'absolute', border: "1px solid transparent", margin: "auto", width: '80px', height: '80px', borderRadius: "50%" }}>
                 {/* <div onClick={e=>returnHandler()} style={{zIndex: '2', position: "fixed", bottom: '-70%', left: '200%',position: 'absolute' }}> */}

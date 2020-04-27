@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { makeStyles, Select, MenuItem } from "@material-ui/core"
 
 import 'react-dates/initialize'
 import 'react-dates/lib/css/_datepicker.css';
@@ -13,6 +14,29 @@ import Axios from 'axios'
 const CONFIRMED = 'confirmed'
 const FATALITIES = 'fatalities'
 const DELIMIT = '^'
+
+const useStyles = makeStyles((theme) => ({
+    confirmedDropdown: {
+        margin: "4px",
+        padding: "4px",
+        color: "yellow",
+        backgroundColor: "rgb(60,60,60)"
+    },
+    fatalitiesDropdown: {
+        margin: "4px",
+        padding: "4px",
+        color: "crimson",
+        backgroundColor: "rgb(60,60,60)"
+    },
+    confirmed: {
+        color: "yellow",
+        border: "0"
+    },
+    fatalities: {
+        color: "crimson",
+        border: "0"
+    }
+}));
 
 function Dash() {
     const [focusedCalendar, setFocusedCalendar] = useState(false)
@@ -29,6 +53,8 @@ function Dash() {
     const [totalConfirmed, setTotalConfirmed] = useState(null)
     const [totalFatalities, setTotalFatalities] = useState(null)
     const [forecast, setForecast] = useState([])
+
+    const classes = useStyles();
 
     useEffect(() => {
         getAllDates()
@@ -73,10 +99,7 @@ function Dash() {
             .catch(error => console.log(error))
     }
 
-    const getPredictionAllLocations = (e) => {
-        if (e) {
-            e.preventDefault()
-        }
+    const getPredictionAllLocations = () => {
         setLoadingWorld(true)
         Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllLocations'
             + `?date=${date.format('YYYY-MM-DD')}`)
@@ -128,21 +151,21 @@ function Dash() {
                 <div className="horizontal-container">
                     <div className="left-column-container">
 
-<div className="date">
-    <p>Forecasts For</p>
-                        <SingleDatePicker
-                            date={date}
-                            onDateChange={date => setDate(date)}
-                            focused={focusedCalendar}
-                            onFocusChange={({ focused }) => setFocusedCalendar(focused)}
-                            id="date-selector"
-                            noBorder={true}
-                            isOutsideRange={date => {
-                                let dateStr = date.format('YYYY-MM-DD')
-                                return dates.length > 1
-                                && (dateStr < dates[0] || dateStr > dates[dates.length-1])
-                            }}
-                        />
+                        <div className="date">
+                            <p>Forecasts For</p>
+                            <SingleDatePicker
+                                date={date}
+                                onDateChange={date => setDate(date)}
+                                focused={focusedCalendar}
+                                onFocusChange={({ focused }) => setFocusedCalendar(focused)}
+                                id="date-selector"
+                                noBorder={true}
+                                isOutsideRange={date => {
+                                    let dateStr = date.format('YYYY-MM-DD')
+                                    return dates.length > 1
+                                        && (dateStr < dates[0] || dateStr > dates[dates.length - 1])
+                                }}
+                            />
                         </div>
                         <div className="total-confirmed">
                             <p>Total Confirmed: <span className="span-confirmed">{totalConfirmed}</span></p>
@@ -151,12 +174,16 @@ function Dash() {
 
                         <div className="by-country-container">
                             <div className="by-country-header">
-                                <p><span className={'span-' + metric}>{metric == 'confirmed' ? 'Confirmed Cases' : 'Fatalities'}</span> by Country/Region</p>
+                                <p><span className={'span-' + metric}>{metric == 'confirmed' ? 'Confirmed Cases' : 'Fatalities'}</span></p><p>by Country/Region</p>
                             </div>
                             <div className="by-country">
                                 <div>{worldPrediction ? worldPrediction.map((item, index) => {
                                     return (
-                                        <button disabled={loadingForecast} className="country-button" onClick={setLocation} value={item.country + (item.province ? DELIMIT + item.province : "")}>
+                                        <button
+                                            disabled={loadingForecast}
+                                            className={"country-button" + (item.country === country && item.province === province ? "-selected" : "")}
+                                            onClick={setLocation} value={item.country + (item.province ? DELIMIT + item.province : "")}
+                                        >
                                             {item.country}{item.province ? ", " + item.province : ""}: <span className={"span-" + metric}>{item[metric].toLocaleString()}</span>
                                         </button>)
                                 })
@@ -167,14 +194,27 @@ function Dash() {
                         </div>
                     </div>
                     <Map worldPrediction={worldPrediction} metric={metric} lonlat={lonlat} />
+
+
                     <div className="right-column-container">
                         <div className="top-subcontainer">
-                            <select style={{ color: 'black' }} name="metric" onChange={e => setMetric(e.target.value)}>
-                                <option value={CONFIRMED} defaultValue={true}>Confirmed Cases</option>
-                                <option value={FATALITIES}>Fatalities</option>
-                            </select>
+
+<div className="dropdown-container">
+    Displaying
+                            <Select
+                                color="primary"
+                                value={metric}
+                                onChange={e => setMetric(e.target.value)}
+                                displayEmpty
+                                className={metric == CONFIRMED ? classes.confirmedDropdown : classes.fatalitiesDropdown}
+                                inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                                <MenuItem style={{backgroundColor: "rgb(39,39,39)"}} className={classes.confirmed} value={CONFIRMED}>Confirmed Cases</MenuItem>
+                                <MenuItem style={{backgroundColor: "rgb(39,39,39)"}} className={classes.fatalities} value={FATALITIES}>Fatalities</MenuItem>
+                            </Select>
+</div>
                             <div>
-                                <Graph forecast={forecast} metric={metric} loading={loadingForecast} />
+                                <Graph forecast={forecast} metric={metric} loading={loadingForecast} country={country} province={province}/>
                             </div>
                         </div>
                         <div className="bottom-subcontainer">

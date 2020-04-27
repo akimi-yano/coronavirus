@@ -106,14 +106,22 @@ body{
   left: 0;
   right: 0; */
   /* bottom: 0; */
-  width: 50vw;
-  height: 100%;
+  width: 49vw;
+  height: 90vh;
   z-index: 1; 
   background-color: rgb(32,32,32);
+  margin:5px 0;
 }
 
-.horizontal-container {
+.mapboxgl-canvas {
+  outline: none;
 }
+
+.mapboxgl-control-container {
+  display: none;
+}
+
+
 .title-container {
   text-align: center;
 }
@@ -121,7 +129,9 @@ body{
 .date {
   background-color: rgb(39,39,39);
   margin: 5px;
-  padding: 5px;
+  /* padding: 5px; */
+  padding: 1vw;
+  /* height: 10vh; */
 }
 
 .SingleDatePickerInput {
@@ -133,9 +143,10 @@ body{
 }
 
 .DateInput_input {
-  background-color: rgb(100,100,100);
+  background-color: rgb(60,60,60);
+  height:2vh;
   color: snow;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 .CalendarMonth strong {
@@ -156,17 +167,21 @@ body{
   height: 5vh;
 } */
 
+
 .left-column-container{
   display: inline-block;
   vertical-align: top;
   width: 20vw;
-  height: 80vh;
+  height: 90vh;
 }
 
 .total-confirmed {
-  height: 10vh;
+  /* height: 5vh; */
   background-color: rgb(39,39,39);
   margin: 5px;
+  vertical-align: middle;
+  padding: 1vw;
+  
 }
 .by-country-container{
   background-color: rgb(39,39,39);
@@ -174,17 +189,27 @@ body{
 }
 
 .by-country-header {
-  height: 10vh;
+  /* height: 10vh; */
   border-bottom: 1px solid black;
+  padding: 1vw;
 }
 
 .by-country {
   overflow: scroll;
-  height: 70vh;
+  height: 58.4vh;
+  width: auto;
 }
 
 .country-button {
   background-color: rgb(39,39,39);
+  border-color: black;
+  border-top-color: rgb(39, 39, 39);
+  width: 20vw;
+  height:30px;
+}
+
+.country-button-selected {
+  background-color: steelblue;
   border-color: black;
   border-top-color: rgb(39, 39, 39);
   width: 20vw;
@@ -207,30 +232,52 @@ body{
 .center-column-container {
   display: inline-block;
   vertical-align: top;
-  height: 80vh;
+  height: 91.5vh;
 }
 
 .right-column-container {
   display: inline-block;
   vertical-align: top;
   width: 30vw;
+  margin: 5px;
+  height: 91.5vh;
+}
+
+.dropdown-container {
+  background-color: rgb(39,39,39);
+  width: 28vw;
+  padding-right: 0;
+  padding: 1vw;
+}
+
+.MuiPaper-root ul {
+  background-color: rgb(39,39,39);
+}
+
+.graph-title {
+  padding: 1vw;
+}
+
+.graph-container {
+  background-color: rgb(39,39,39);
+  width: 30vw;
+  margin-top: 5px;
 }
 
 .top-subcontainer {
   width: 30vw;
-  height: 50vh;
+  height: 70vh;
 }
 
 .bottom-subcontainer {
   width: 30vw;
-  vertical-align: top;
-  height: 40vh;
+  height: 20vh;
   overflow: scroll;
 }
 
 .about {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 0;
   width: 80vw;

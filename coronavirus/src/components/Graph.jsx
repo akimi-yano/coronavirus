@@ -9,6 +9,9 @@ function Graph(props) {
         return (
             <div>
                 {!props.loading ?
+                <div className="graph-container">
+
+            <p class="graph-title">{props.country}{props.province ? ", " + props.province : ""}</p>
                 <ResponsiveContainer width="99%" aspect={2}>
                 <LineChart
                 data={props.forecast}
@@ -20,6 +23,7 @@ function Graph(props) {
                 <Line type="monotone" dataKey={props.metric} stroke={COLORS[props.metric]} activeDot={{ r: 8 }} />
               </LineChart>
                 </ResponsiveContainer>
+                </div>
           : <span class="forecast-loader"><span class="loader-inner"></span></span>}
             </div>
           )

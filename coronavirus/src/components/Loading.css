@@ -2,9 +2,9 @@
 
 .spinner {
     position: absolute;
-    top: 47%;
-    left: 45%;
-    z-index: 2;
+    top: 52%;
+    left: 44%;
+    z-index: 1;
     perspective: 200px;
   }
   

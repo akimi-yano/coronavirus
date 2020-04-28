@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Select, MenuItem } from "@material-ui/core"
-
 import 'react-dates/initialize'
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker } from 'react-dates'
-
 import moment from 'moment'
+
 import Graph from './Graph'
 import Loading from './Loading'
 import Map from './Map'
@@ -117,7 +116,6 @@ function Dash() {
         Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllDays'
             + `?country=${newCountry}` + (newProvince ? '&province=' + newProvince : ''))
             .then(response => {
-                console.log(response.data.predictions)
                 setForecast(response.data.predictions)
                 setCountry(newCountry)
                 setProvince(newProvince)

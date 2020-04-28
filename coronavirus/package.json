@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "csv-parse": "^4.9.0",
     "mapbox-gl": "^1.9.1",
     "mapbox.js": "^3.3.0",
     "moment": "^2.24.0",

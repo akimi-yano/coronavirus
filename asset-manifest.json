@@ -1,22 +1,26 @@
 {
   "files": {
-    "main.css": "/coronavirus-prediction/static/css/main.9bdf3840.chunk.css",
-    "main.js": "/coronavirus-prediction/static/js/main.1812acdc.chunk.js",
-    "main.js.map": "/coronavirus-prediction/static/js/main.1812acdc.chunk.js.map",
+    "main.css": "/coronavirus-prediction/static/css/main.cbac63fe.chunk.css",
+    "main.js": "/coronavirus-prediction/static/js/main.052cf5b4.chunk.js",
+    "main.js.map": "/coronavirus-prediction/static/js/main.052cf5b4.chunk.js.map",
     "runtime-main.js": "/coronavirus-prediction/static/js/runtime-main.992535c3.js",
     "runtime-main.js.map": "/coronavirus-prediction/static/js/runtime-main.992535c3.js.map",
-    "static/js/2.1f94c07d.chunk.js": "/coronavirus-prediction/static/js/2.1f94c07d.chunk.js",
-    "static/js/2.1f94c07d.chunk.js.map": "/coronavirus-prediction/static/js/2.1f94c07d.chunk.js.map",
+    "static/css/2.f1689cb5.chunk.css": "/coronavirus-prediction/static/css/2.f1689cb5.chunk.css",
+    "static/js/2.5323add9.chunk.js": "/coronavirus-prediction/static/js/2.5323add9.chunk.js",
+    "static/js/2.5323add9.chunk.js.map": "/coronavirus-prediction/static/js/2.5323add9.chunk.js.map",
     "index.html": "/coronavirus-prediction/index.html",
-    "precache-manifest.454e21fb2a9fffc360daa54245cf59b8.js": "/coronavirus-prediction/precache-manifest.454e21fb2a9fffc360daa54245cf59b8.js",
+    "precache-manifest.f5a2f12560c17a4af3972cfc42b5ec9f.js": "/coronavirus-prediction/precache-manifest.f5a2f12560c17a4af3972cfc42b5ec9f.js",
     "service-worker.js": "/coronavirus-prediction/service-worker.js",
-    "static/css/main.9bdf3840.chunk.css.map": "/coronavirus-prediction/static/css/main.9bdf3840.chunk.css.map",
-    "static/js/2.1f94c07d.chunk.js.LICENSE.txt": "/coronavirus-prediction/static/js/2.1f94c07d.chunk.js.LICENSE.txt"
+    "static/css/2.f1689cb5.chunk.css.map": "/coronavirus-prediction/static/css/2.f1689cb5.chunk.css.map",
+    "static/css/main.cbac63fe.chunk.css.map": "/coronavirus-prediction/static/css/main.cbac63fe.chunk.css.map",
+    "static/js/2.5323add9.chunk.js.LICENSE.txt": "/coronavirus-prediction/static/js/2.5323add9.chunk.js.LICENSE.txt",
+    "static/media/mapbox.css": "/coronavirus-prediction/static/media/icons.1f78f86d.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.992535c3.js",
-    "static/js/2.1f94c07d.chunk.js",
-    "static/css/main.9bdf3840.chunk.css",
-    "static/js/main.1812acdc.chunk.js"
+    "static/css/2.f1689cb5.chunk.css",
+    "static/js/2.5323add9.chunk.js",
+    "static/css/main.cbac63fe.chunk.css",
+    "static/js/main.052cf5b4.chunk.js"
   ]
 }

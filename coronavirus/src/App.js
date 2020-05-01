@@ -14,8 +14,8 @@ function App() {
 
 <JHU>
     <HashRouter basename='/'>
+    <Route path="/about" component={About} />
     <HeaderWithRouter/>
-      <Route path="/about" component={About} />
     </HashRouter>
     <Dash/>
 </JHU>

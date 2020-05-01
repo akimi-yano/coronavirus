@@ -46,6 +46,8 @@ function Dash() {
     const [locations, setLocations] = useState([])
     const [dates, setDates] = useState([])
     const [worldPrediction, setWorldPrediction] = useState()
+    const [filteredWorldPrediction, setFilteredWorldPrediction] = useState()
+    const [searchTerm, setSearchTerm] = useState("")
     const [loadingWorld, setLoadingWorld] = useState(false)
     const [loadingForecast, setLoadingForecast] = useState(false)
     const [metric, setMetric] = useState(CONFIRMED)
@@ -58,9 +60,9 @@ function Dash() {
     useEffect(() => {
         getAllDates()
         getAllLocations()
-        const script = document.createElement("script");
-        script.src = "https://platform.twitter.com/widgets.js";
-        document.getElementsByClassName("twitter-embed")[0].appendChild(script);
+        // const script = document.createElement("script");
+        // script.src = "https://platform.twitter.com/widgets.js";
+        // document.getElementsByClassName("twitter-embed")[0].appendChild(script);
     }, [])
 
     useEffect(() => {
@@ -79,6 +81,14 @@ function Dash() {
             setTotalFatalities(newTotalFatalities.toLocaleString())
         }
     }, [worldPrediction])
+
+    useEffect(() => {
+        if (worldPrediction) {
+            let filtered = worldPrediction.filter(elem =>
+                (elem.country.toLowerCase() + (elem.province ? ", " + elem.province.toLowerCase() : "")).includes(searchTerm.toLowerCase()))
+            setFilteredWorldPrediction(filtered)
+        }
+    }, [worldPrediction, searchTerm])
 
     const getAllDates = () => {
         Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/dates')
@@ -166,16 +176,19 @@ function Dash() {
                             />
                         </div>
                         <div className="total-confirmed">
-                            <p>Total Confirmed: <span className="span-confirmed">{totalConfirmed}</span></p>
-                            <p>Total Fatalities: <span className="span-fatalities"> {totalFatalities} </span></p>
+                            <p>Total Confirmed</p>
+                            <p><span style={{fontSize: "32px"}} className="span-confirmed">{totalConfirmed ? totalConfirmed : '----'}</span></p>
+                            <p>Total Fatalities</p>
+                            <p><span style={{fontSize: "32px"}} className="span-fatalities"> {totalFatalities ? totalFatalities: '----'} </span></p>
                         </div>
 
                         <div className="by-country-container">
                             <div className="by-country-header">
                                 <p><span className={'span-' + metric}>{metric == 'confirmed' ? 'Confirmed Cases' : 'Fatalities'}</span></p><p>by Country/Region</p>
+                                <input className="location-search" type="text" placeholder="Search Location" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                             </div>
                             <div className="by-country">
-                                <div>{worldPrediction ? worldPrediction.map((item, index) => {
+                                <div>{filteredWorldPrediction ? filteredWorldPrediction.map((item, index) => {
                                     return (
                                         <button
                                             disabled={loadingForecast}
@@ -191,31 +204,37 @@ function Dash() {
                             </div>
                         </div>
                     </div>
-                    <Map worldPrediction={worldPrediction} metric={metric} lonlat={lonlat} />
+                    <Map worldPrediction={worldPrediction} metric={metric} lonlat={lonlat} setLocation={setLocation} />
 
 
                     <div className="right-column-container">
                         <div className="top-subcontainer">
 
-<div className="dropdown-container">
-    Displaying
+                            <div className="dropdown-container">
+                                Displaying
                             <Select
-                                color="primary"
-                                value={metric}
-                                onChange={e => setMetric(e.target.value)}
-                                displayEmpty
-                                className={metric == CONFIRMED ? classes.confirmedDropdown : classes.fatalitiesDropdown}
-                                inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                                <MenuItem style={{backgroundColor: "rgb(39,39,39)"}} className={classes.confirmed} value={CONFIRMED}>Confirmed Cases</MenuItem>
-                                <MenuItem style={{backgroundColor: "rgb(39,39,39)"}} className={classes.fatalities} value={FATALITIES}>Fatalities</MenuItem>
-                            </Select>
-</div>
+                                    color="primary"
+                                    value={metric}
+                                    onChange={e => setMetric(e.target.value)}
+                                    displayEmpty
+                                    className={metric == CONFIRMED ? classes.confirmedDropdown : classes.fatalitiesDropdown}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                >
+                                    <MenuItem style={{ backgroundColor: "rgb(39,39,39)" }} className={classes.confirmed} value={CONFIRMED}>Confirmed Cases</MenuItem>
+                                    <MenuItem style={{ backgroundColor: "rgb(39,39,39)" }} className={classes.fatalities} value={FATALITIES}>Fatalities</MenuItem>
+                                </Select>
+                            </div>
                             <div>
-                                <Graph forecast={forecast} metric={metric} loading={loadingForecast} country={country} province={province}/>
+                                <Graph forecast={forecast} metric={metric} loading={loadingForecast} country={country} province={province} />
                             </div>
                         </div>
-                        <div className="bottom-subcontainer">
+                        <div className="middle-subcontainer">
+                        <div className="actual-data-title">
+                            Actual Data
+                        </div>
+                        <iframe className="actual-data" src="https://www.arcgis.com/apps/opsdashboard/index.html#/85320e2ea5424dfaaa75ae62e5c06e61"></iframe>
+                            </div>
+                        {/* <div className="bottom-subcontainer">
                             <section className="twitterContainer">
                                 <div className="twitter-embed">
                                     <a
@@ -227,7 +246,7 @@ function Dash() {
                                     />
                                 </div>
                             </section>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

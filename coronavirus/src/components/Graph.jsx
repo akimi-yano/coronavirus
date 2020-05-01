@@ -22,10 +22,7 @@ function Graph(props) {
           confirmed: item.confirmed,
           fatalities: item.fatalities}
           let locationKey = props.country + DELIMIT + props.province
-          console.log(context.actual)
-          console.log(locationKey)
           if (context.actual[locationKey] && context.actual[locationKey][item.date]) {
-            console.log('HERE')
             datapoint.confirmedActual = context.actual[locationKey][item.date].confirmed
             datapoint.fatalitiesActual = context.actual[locationKey][item.date].fatalities
           }
@@ -67,11 +64,11 @@ function Graph(props) {
                 <div className="graph-container">
 
             <p class="graph-title">{props.country}{props.province ? ", " + props.province : ""}</p>
-                <ResponsiveContainer width="99%" aspect={2}>
+                <ResponsiveContainer width="99%" aspect={1.9}>
                 <LineChart data={chartData}>
                 <CartesianGrid/>
                 <XAxis dataKey="date">
-                  <Label value={"RMSLE: " + rmsles[props.metric]} position="insideBottomRight" offset={-5} style={{fill: "snow"}} />
+                  <Label value={"RMSLE: " + rmsles[props.metric]} position="insideBottomRight" offset={-6} style={{fill: "springgreen", fontWeight: "bold"}} />
                   </XAxis>
                 <YAxis domain={['dataMin', 'dataMax']}/>
                 <Tooltip contentStyle={{backgroundColor: "gray"}}/>

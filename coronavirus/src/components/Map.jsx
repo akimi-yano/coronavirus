@@ -8,7 +8,8 @@ import Axios from 'axios'
 
 let map
 
-const COLORS = {confirmed: 'yellow', fatalities: 'red'}
+const COLORS = { confirmed: 'yellow', fatalities: 'red' }
+const CONCAT = '^'
 
 const Map = (props) => {
     // const context = useContext(Context)
@@ -52,8 +53,8 @@ const Map = (props) => {
                         'coordinates': [item.lon, item.lat]
                     },
                     'properties': {
-                        'title': item.country + item.province,
-                        'radius': Math.log(parseInt(item[props.metric]) + 1)
+                        'title': item.country + CONCAT + item.province,
+                        'radius': Math.log(parseInt(item[props.metric]) + 1),
                         // 'radius': parseInt(item[props.metric]) * 0.0001
                     }
                 })
@@ -81,92 +82,42 @@ const Map = (props) => {
                     'circle-stroke-opacity': 1
                 }
             })
+
             setLayerId(newLayerId)
+
+            // When a click event occurs on a feature in the places layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', newLayerId, function (e) {
+                if (props.setLocation) {
+                    let event = { target: { value: e.features[0].properties.title } }
+                    props.setLocation(event)
+                }
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', newLayerId, function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', newLayerId, function () {
+                map.getCanvas().style.cursor = '';
+            });
         }
     }, [props.worldPrediction, props.metric])
 
     useEffect(() => {
-        if(props.lonlat) {
+        if (props.lonlat) {
             map.flyTo(
-                {center: [props.lonlat[0], props.lonlat[1]], essential: true, zoom: 4, speed: 0.5, curve: 1}
+                { center: [props.lonlat[0], props.lonlat[1]], essential: true, zoom: 4, speed: 0.5, curve: 1 }
             )
         }
     }, [props.lonlat])
 
-    // useEffect(() => {
-    //     if (context.db) {
-    //         // get countries data to get room count
-    //         context.db.collection('countries').onSnapshot(countriesSnapshot => {
-    //             let occupied = new Set()
-    //             countriesSnapshot.forEach(country =>
-    //                 country.exists ? (country.data().readRoom ? occupied.add(country.id) : null): null
-    //             )
-
-    //             let countriesOnEachFeature = (feature, layer) => {
-    //                 let country = feature.properties.name
-    //                 let color = occupied.has(country) ? ('navy') : ''
-    //                 layer.on(
-    //                     {
-    //                         mouseover: highlightFeature,
-    //                         mouseout: e => {
-    //                             setHighlightedCountry("")
-    //                             e.target.setStyle({ fillColor: color, opacity: 0.2, fillOpacity: 0.2 })
-    //                         },
-    //                         click: zoomToFeature
-    //                     }
-    //                 )
-    //                 layer.setStyle({ fillColor: color, opacity: 0.2, fillOpacity: 0.2 })
-    //             }
-    //             if (geojson) {
-    //                 geojson.remove()
-    //             }
-    //             geojson = L.geoJSON(countriesLayer, {
-    //                 onEachFeature: countriesOnEachFeature
-    //             }).addTo(map);
-    //         })
-    //     }
-    // }, [context.db])
-
-    const zoomToFeature = (clickEvent) => {
-        let countryObject = clickEvent.target
-        let countryName = countryObject.feature.properties.name
-        let countryBounds = (countryObject.getBounds())
-
-        map.fitBounds(countryBounds)
-        if (countryName === "United States") {
-            map.setView([38.68551, -99.49219], 5)
-        } else if (countryName === "China") {
-            map.setView([37.23033, 105.77637], 3)
-        }
-        else if (countryName === "Spain") {
-            map.setView([40.66397, -3.40576], 6)
-        }
-        else if (countryName === "France") {
-            map.setView([46.83013, 2.59277], 6)
-        }
-        else if (countryName === "Republic of Korea") {
-            map.setView([35.88015, 127.97974], 7)
-        }
-        else {
-            map.setView([16.541430, 7.558594], 2)
-        }
-
-        // navigate(`/enter/${clickEvent.target.feature.properties.name}`)
-    }
-
-    // const returnHandler = e =>{
-    //     navigate('/')
-    //     }
     return (
         <div className="center-column-container">
-            {/* <div className="userName">{context.name}</div> */}
-
             <div className="container" id="map"></div>
             <div style={{ zIndex: '2', position: "fixed", bottom: '50px', left: '50px', position: 'absolute', border: "1px solid transparent", margin: "auto", width: '80px', height: '80px', borderRadius: "50%" }}>
-                {/* <div onClick={e=>returnHandler()} style={{zIndex: '2', position: "fixed", bottom: '-70%', left: '200%',position: 'absolute' }}> */}
-                {/* <img style={{width: '150px'}} src={process.env.PUBLIC_URL + '/speechBubble.png'} />
-            <p style={{position: 'absolute', bottom: '36%', margin: '10px',  maxWidth: '180px', fontFamily: "'Chelsea Market', cursive", }}>Click this to change name and avatar</p> */}
-                {/* </div> */}
 
 
             </div>

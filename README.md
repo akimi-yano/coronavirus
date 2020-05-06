@@ -1,5 +1,5 @@
 # Coronavirus Forecast Center: 
-## https://akimi-yano.github.io/coronavirus-prediction/#/
+## Deployed: https://akimi-yano.github.io/coronavirus-prediction/#/
 
 A world-map of the predicted spread of confirmed cases and fatalities of the COVID-19 virus in 180+ countries using machine learning.
 

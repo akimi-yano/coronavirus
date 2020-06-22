@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ad156e2878a5ae28084b8f8c142b3811",
+    "revision": "469dfce339281214b43716dca28cd549",
     "url": "/coronavirus-prediction/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coronavirus-prediction/static/css/2.f1689cb5.chunk.css"
   },
   {
-    "revision": "12de6fbcfa416250b828",
+    "revision": "dcc5db82a1a188e255af",
     "url": "/coronavirus-prediction/static/css/main.6f8f5e2c.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coronavirus-prediction/static/js/2.2a26c7d0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "12de6fbcfa416250b828",
-    "url": "/coronavirus-prediction/static/js/main.bfdfc8f3.chunk.js"
+    "revision": "dcc5db82a1a188e255af",
+    "url": "/coronavirus-prediction/static/js/main.763d7159.chunk.js"
   },
   {
     "revision": "dcaba553442583f0e9f0",

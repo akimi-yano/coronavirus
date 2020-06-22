@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/coronavirus-prediction/static/css/main.6f8f5e2c.chunk.css",
-    "main.js": "/coronavirus-prediction/static/js/main.bfdfc8f3.chunk.js",
-    "main.js.map": "/coronavirus-prediction/static/js/main.bfdfc8f3.chunk.js.map",
+    "main.js": "/coronavirus-prediction/static/js/main.763d7159.chunk.js",
+    "main.js.map": "/coronavirus-prediction/static/js/main.763d7159.chunk.js.map",
     "runtime-main.js": "/coronavirus-prediction/static/js/runtime-main.992535c3.js",
     "runtime-main.js.map": "/coronavirus-prediction/static/js/runtime-main.992535c3.js.map",
     "static/css/2.f1689cb5.chunk.css": "/coronavirus-prediction/static/css/2.f1689cb5.chunk.css",
     "static/js/2.2a26c7d0.chunk.js": "/coronavirus-prediction/static/js/2.2a26c7d0.chunk.js",
     "static/js/2.2a26c7d0.chunk.js.map": "/coronavirus-prediction/static/js/2.2a26c7d0.chunk.js.map",
     "index.html": "/coronavirus-prediction/index.html",
-    "precache-manifest.179568dc58ef124127288b84f7ed782b.js": "/coronavirus-prediction/precache-manifest.179568dc58ef124127288b84f7ed782b.js",
+    "precache-manifest.d230c710e007b93c946a3c79a46d4da3.js": "/coronavirus-prediction/precache-manifest.d230c710e007b93c946a3c79a46d4da3.js",
     "service-worker.js": "/coronavirus-prediction/service-worker.js",
     "static/css/2.f1689cb5.chunk.css.map": "/coronavirus-prediction/static/css/2.f1689cb5.chunk.css.map",
     "static/css/main.6f8f5e2c.chunk.css.map": "/coronavirus-prediction/static/css/main.6f8f5e2c.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.f1689cb5.chunk.css",
     "static/js/2.2a26c7d0.chunk.js",
     "static/css/main.6f8f5e2c.chunk.css",
-    "static/js/main.bfdfc8f3.chunk.js"
+    "static/js/main.763d7159.chunk.js"
   ]
 }

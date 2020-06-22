@@ -110,8 +110,11 @@ function Dash() {
 
     const getPredictionAllLocations = () => {
         setLoadingWorld(true)
+        // Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllLocations'
+        //     + `?date=${date.format('YYYY-MM-DD')}`)
+        // TODO remove hardcode date after data is available again on Kaggle
         Axios.get('https://coronavirus-kaggle.azurewebsites.net/api/predictAllLocations'
-            + `?date=${date.format('YYYY-MM-DD')}`)
+            + `?date=2020-06-15`)
             .then(response => {
                 let newLocations = response.data.locations
                     .sort((a, b) => b[CONFIRMED] - a[CONFIRMED])
